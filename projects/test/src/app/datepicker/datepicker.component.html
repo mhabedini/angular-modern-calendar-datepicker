@@ -1,0 +1,73 @@
+<div
+  [class.dark]="darkMode"
+  [dir]="rtl ? 'rtl' : 'ltr'"
+  class="flex flex-col w-[22.5rem] m-10 border rounded-xl p-4 bg-white dark:bg-gray-800">
+  <div class="flex flex-row justify-between items-center">
+    <a
+      (click)="onPreviousMonthClick()"
+      class="cursor-pointer ps-0.5 py-2 flex flex-row items-center text-xs text-gray-500 dark:text-gray-200 gap-1">
+      <div class="border-s border-b border-primary w-2 h-2 rtl:-rotate-45 ltr:rotate-45"></div>
+      ماه قبل
+    </a>
+    <div class="flex justify-center text-primary gap-2">
+      <div class="rounded-full bg-primary bg-opacity-10 px-4 py-2 cursor-pointer font-bold text-sm">
+        {{currentYear}}
+      </div>
+
+      <div class="rounded-full bg-primary bg-opacity-10 px-4 py-2 cursor-pointer font-bold text-sm">
+        {{currentMonth}}
+      </div>
+    </div>
+    <div
+      (click)="onNextMonthClick()"
+      class="cursor-pointer pe-0.5 py-2 flex flex-row items-center text-xs text-gray-500 dark:text-gray-200 gap-1">
+      ماه بعد
+      <div class="border-e border-t border-primary w-2 h-2 rtl:-rotate-45 ltr:rotate-45"></div>
+    </div>
+  </div>
+
+  <div class="flex flex-col mt-4">
+    <div class="flex flex-row gap-2 text-sm bg-primary text-white rounded-lg">
+      <div class="flex w-10 h-10 items-center justify-center"
+           *ngFor="let day of jalaliDateService.weekdaysShort()">{{day}}</div>
+    </div>
+
+    <div class="flex flex-col mt-4 gap-4">
+      <div
+        *ngFor="let week of dates"
+        class="flex flex-row gap-2">
+        <div
+          class="flex w-10 cursor-pointer h-10 p-1 font-medium text-black dark:text-white justify-center rounded"
+          [class.!text-red-500]="day.weekIndex === 6"
+          [class.dark:!text-red-400]="day.weekIndex === 6"
+          [class.hover:text-primary]="day.isForCurrentMonth"
+          [class.hover:bg-primary]="day.isForCurrentMonth"
+          [class.hover:bg-opacity-10]="day.isForCurrentMonth"
+          [class.dark:hover:bg-opacity-20]="day.isForCurrentMonth"
+          [class.!text-opacity-30]="!day.isForCurrentMonth"
+          [class.dark:!text-opacity-40]="!day.isForCurrentMonth"
+          [class.!cursor-default]="!day.isForCurrentMonth"
+          [class.text-primary]="day.isToday && day.isForCurrentMonth"
+          [class.!border]="day.isToday && day.isForCurrentMonth"
+          [class.border-primary]="day.isToday && day.isForCurrentMonth"
+          [class.!bg-primary]="selectedDate === day.date.format('YYYY/MM/DD')"
+          [class.!text-white]="selectedDate === day.date.format('YYYY/MM/DD')"
+          [class.dark:!text-white]="selectedDate === day.date.format('YYYY/MM/DD')"
+          (click)="day.isForCurrentMonth ? selectedDate = day.date.format('YYYY/MM/DD'): null"
+          *ngFor="let day of week">
+          <div class="flex flex-col w-full">
+            <div class="flex flex-row justify-center leading-4">{{day.jDay}}</div>
+            <div class="flex flex-row justify-between items-center text-[.625rem] px-0.5 w-full">
+              <div>{{day.iDay}}</div>
+              <div class="mb-[2px] font-sansFaEn">{{day.day}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mx-10">
+  {{momentJalali(selectedDate).format('YYYY/MM/DD')}}
+</div>
