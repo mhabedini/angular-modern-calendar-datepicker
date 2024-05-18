@@ -10,7 +10,8 @@ import * as momentJalali from "jalali-moment";
 })
 export class DatepickerComponent {
 
-  @Input() darkMode: boolean = true
+  @Input() darkMode: boolean = false
+  @Input() rtl: boolean = true
 
   selectedDate!: any
   dates!: any
