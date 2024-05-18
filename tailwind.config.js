@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const colors = require('tailwindcss/colors')
+
 module.exports = {
   content: ["./projects/**/*.{html,js}"],
   theme: {
@@ -8,6 +11,10 @@ module.exports = {
         sansFaEn: ['IRANSansX', 'sans-serif'],
       },
     },
+    colors: {
+      primary: 'rgb(var(--color-primary) / <alpha-value>)',
+      ...colors,
+    }
   },
   plugins: [],
 }

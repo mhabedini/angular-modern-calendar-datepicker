@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ElementRef} from '@angular/core';
 import {JalaliDateService} from "../../../../angular-persian-datepicker/src/lib/service/jalali-date-service";
 import * as moment from "moment";
 import * as momentJalali from "jalali-moment";
@@ -15,7 +15,8 @@ export class DatepickerComponent {
   currentYear: any
   currentMonth: any
 
-  constructor(public readonly jalaliDateService: JalaliDateService) {
+  constructor(public readonly jalaliDateService: JalaliDateService, element: ElementRef) {
+    element.nativeElement.style.setProperty('--color-primary', this.hexToRgb('#d51387'))
     this.loadData(moment().format('YYYY/MM/DD'))
   }
 
@@ -31,6 +32,19 @@ export class DatepickerComponent {
     this.dates = this.jalaliDateService.daysInMonth(date)
     this.currentYear = this.dates[1][6].jDate.format('YYYY')
     this.currentMonth = this.dates[1][6].jDate.format('MMMM')
+  }
+
+  hexToRgb(hex: string): string {
+    // Remove the hash sign if it's included
+    hex = hex.replace('#', '');
+
+    // Convert the hex value to RGB
+    const bigint = parseInt(hex, 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+
+    return `${r} ${g} ${b}`;
   }
 
   protected readonly momentJalali = momentJalali;
