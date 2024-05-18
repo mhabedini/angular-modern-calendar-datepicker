@@ -81,9 +81,6 @@ export class JalaliDateService implements DateServiceInterface {
     const startDate = moment(momentJalali(`${jYear}/${jMonth + 1}/01`, 'jYYYY/jMM/jDD').doAsGregorian().format('YYYY/MM/DD'))
     const endDate = moment(momentJalali(`${jYear}/${jMonth + 1}/${jDaysInMonth}`, 'jYYYY/jMM/jDD').doAsGregorian().format('YYYY/MM/DD'))
 
-    const year = moment(startDate).year()
-    const month = moment(startDate).month() + 1
-
     const momentRange: any = extendMoment(moment)
     const monthRange = momentRange.range(startDate, endDate)
 
@@ -100,10 +97,32 @@ export class JalaliDateService implements DateServiceInterface {
     const now = moment()
     const startDateDayBefore = startDate.subtract(1, 'days').startOf('day')
     const endDateDayAfter = endDate.endOf('day')
+    const year = moment(startDate).year()
 
     weeks.forEach(week => {
-      const firstWeekDay = moment([year, month]).week(week).startOf('week')
-      const lastWeekDay = moment([year, month]).week(week).endOf('week')
+      let firstWeekDay
+      let lastWeekDay
+
+      if (weeks.includes(52)) {
+        if (week === 52) {
+          firstWeekDay = moment([year, 11]).week(week).startOf('week');
+          lastWeekDay = moment([year, 11]).week(week).endOf('week');
+
+        } else if (week === 1) {
+          firstWeekDay = moment([year + 1, 0]).week(week).startOf('week');
+          lastWeekDay = moment([year + 1, 0]).week(week).endOf('week');
+        } else if (week < 52 && week > 5) {
+          firstWeekDay = moment([year]).week(week).startOf('week');
+          lastWeekDay = moment([year]).week(week).endOf('week');
+        } else {
+          firstWeekDay = moment([year + 1]).week(week).startOf('week');
+          lastWeekDay = moment([year + 1]).week(week).endOf('week');
+        }
+      } else {
+        firstWeekDay = moment([year]).week(week).startOf('week');
+        lastWeekDay = moment([year]).week(week).endOf('week');
+      }
+
       const weekRange = momentRange.range(firstWeekDay, lastWeekDay)
       const finalWeeks: any[] = []
       Array.from(weekRange.by('day')).forEach((day: any, index) => {
@@ -111,6 +130,7 @@ export class JalaliDateService implements DateServiceInterface {
         const iDate = momentHijri(day)
         finalWeeks.push({
           jDate: jDate,
+          iDate: iDate,
           date: day,
           weekIndex: index,
           day: day.date(),
@@ -122,7 +142,6 @@ export class JalaliDateService implements DateServiceInterface {
       })
       calendar.push(finalWeeks);
     })
-
     return calendar
   }
 }
