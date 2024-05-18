@@ -1,8 +1,8 @@
 import {Component, ElementRef, Input} from '@angular/core';
 import {JalaliDateService} from "../../../../angular-persian-datepicker/src/lib/service/jalali-date-service";
 import * as moment from "moment";
-import * as momentJalali from "jalali-moment";
 import {Moment} from "moment";
+import * as momentJalali from "jalali-moment";
 
 @Component({
   selector: 'app-datepicker',
@@ -10,18 +10,18 @@ import {Moment} from "moment";
   styleUrls: ['./datepicker.component.sass']
 })
 export class DatepickerComponent {
-
   @Input() darkMode: boolean = false
   @Input() rtl: boolean = true
+  @Input() primaryColor = '#ff516c'
 
-  selectedDate!: any
+  selectedDate: any = moment().format('YYYY/MM/DD')
   dates!: any
   currentYear: any
   currentMonth: any
 
-  constructor(public readonly jalaliDateService: JalaliDateService, element: ElementRef) {
-    element.nativeElement.style.setProperty('--color-primary', this.hexToRgb('#8a2635'))
-    this.loadData(moment().subtract(268, 'month'))
+  constructor(public readonly jalaliDateService: JalaliDateService, private readonly element: ElementRef) {
+    this.loadData(moment())
+    this.onColorChanges(this.primaryColor)
   }
 
   onPreviousMonthClick() {
@@ -39,15 +39,11 @@ export class DatepickerComponent {
   }
 
   hexToRgb(hex: string): string {
-    // Remove the hash sign if it's included
     hex = hex.replace('#', '');
-
-    // Convert the hex value to RGB
     const bigint = parseInt(hex, 16);
     const r = (bigint >> 16) & 255;
     const g = (bigint >> 8) & 255;
     const b = bigint & 255;
-
     return `${r} ${g} ${b}`;
   }
 
@@ -56,5 +52,15 @@ export class DatepickerComponent {
   onDateChange(value: string) {
     this.loadData(moment(value))
     this.selectedDate = moment(value).format('YYYY/MM/DD')
+  }
+
+  onJalaliDateChange(value: string) {
+    const date = moment(momentJalali(value, 'jYYYY/jMM/jDD').doAsGregorian().format('YYYY/MM/DD'))
+    this.loadData(date);
+    this.selectedDate = date.format('YYYY/MM/DD')
+  }
+
+  onColorChanges(color: string) {
+    this.element.nativeElement.style.setProperty('--color-primary', this.hexToRgb(color));
   }
 }

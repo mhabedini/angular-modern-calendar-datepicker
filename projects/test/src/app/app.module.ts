@@ -12,10 +12,10 @@ import {DatepickerModule} from "./datepicker/datepicker.module";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    DatepickerModule
+    DatepickerModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {
 }

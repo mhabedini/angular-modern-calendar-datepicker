@@ -9,7 +9,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['IRANSansXFaNum', 'sans-serif'],
-        sansFaEn: ['IRANSansX', 'sans-serif'],
+        sansEn: ['IRANSansX', 'sans-serif'],
       },
     },
     colors: {
