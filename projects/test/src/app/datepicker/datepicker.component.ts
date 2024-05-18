@@ -1,4 +1,4 @@
-import {Component, ElementRef} from '@angular/core';
+import {Component, ElementRef, Input} from '@angular/core';
 import {JalaliDateService} from "../../../../angular-persian-datepicker/src/lib/service/jalali-date-service";
 import * as moment from "moment";
 import * as momentJalali from "jalali-moment";
@@ -10,13 +10,15 @@ import * as momentJalali from "jalali-moment";
 })
 export class DatepickerComponent {
 
+  @Input() darkMode: boolean = true
+
   selectedDate!: any
   dates!: any
   currentYear: any
   currentMonth: any
 
   constructor(public readonly jalaliDateService: JalaliDateService, element: ElementRef) {
-    element.nativeElement.style.setProperty('--color-primary', this.hexToRgb('#d51387'))
+    element.nativeElement.style.setProperty('--color-primary', this.hexToRgb('#7bb41b'))
     this.loadData(moment().format('YYYY/MM/DD'))
   }
 

@@ -1,8 +1,11 @@
-<div dir="rtl" class="flex flex-col w-[22.5rem] m-10 border rounded-xl p-4">
+<div
+  [class.dark]="darkMode"
+  dir="rtl"
+  class="flex flex-col w-[22.5rem] m-10 border rounded-xl p-4 bg-white dark:bg-gray-800">
   <div class="flex flex-row justify-between items-center">
     <a
       (click)="onPreviousMonthClick()"
-      class="cursor-pointer ps-0.5 py-2 flex flex-row items-center text-xs text-gray-500 gap-1">
+      class="cursor-pointer ps-0.5 py-2 flex flex-row items-center text-xs text-gray-500 dark:text-gray-200 gap-1">
       <div class="border-s border-b border-primary w-2 h-2 rtl:-rotate-45 ltr:rotate-45"></div>
       ماه قبل
     </a>
@@ -17,7 +20,7 @@
     </div>
     <div
       (click)="onNextMonthClick()"
-      class="cursor-pointer pe-0.5 py-2 flex flex-row items-center text-xs text-gray-500 gap-1">
+      class="cursor-pointer pe-0.5 py-2 flex flex-row items-center text-xs text-gray-500 dark:text-gray-200 gap-1">
       ماه بعد
       <div class="border-e border-t border-primary w-2 h-2 rtl:-rotate-45 ltr:rotate-45"></div>
     </div>
@@ -34,18 +37,22 @@
         *ngFor="let week of dates"
         class="flex flex-row gap-2">
         <div
-          class="flex w-10 cursor-pointer h-10 p-1 font-medium text-black justify-center rounded"
+          class="flex w-10 cursor-pointer h-10 p-1 font-medium text-black dark:text-white justify-center rounded"
           [class.!text-red-500]="day.weekIndex === 6"
+          [class.dark:!text-red-400]="day.weekIndex === 6"
           [class.hover:text-primary]="day.isForCurrentMonth"
           [class.hover:bg-primary]="day.isForCurrentMonth"
           [class.hover:bg-opacity-10]="day.isForCurrentMonth"
+          [class.dark:hover:bg-opacity-20]="day.isForCurrentMonth"
           [class.!text-opacity-30]="!day.isForCurrentMonth"
+          [class.dark:!text-opacity-40]="!day.isForCurrentMonth"
           [class.!cursor-default]="!day.isForCurrentMonth"
           [class.text-primary]="day.isToday && day.isForCurrentMonth"
           [class.!border]="day.isToday && day.isForCurrentMonth"
           [class.border-primary]="day.isToday && day.isForCurrentMonth"
-          [class.bg-primary]="selectedDate === day.date.format('YYYY/MM/DD')"
+          [class.!bg-primary]="selectedDate === day.date.format('YYYY/MM/DD')"
           [class.!text-white]="selectedDate === day.date.format('YYYY/MM/DD')"
+          [class.dark:!text-white]="selectedDate === day.date.format('YYYY/MM/DD')"
           (click)="day.isForCurrentMonth ? selectedDate = day.date.format('YYYY/MM/DD'): null"
           *ngFor="let day of week">
           <div class="flex flex-col w-full">
