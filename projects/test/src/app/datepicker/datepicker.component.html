@@ -1,10 +1,9 @@
-<div class="flex flex-col w-[22.5rem] m-10 border rounded-xl p-4">
-
+<div dir="rtl" class="flex flex-col w-[22.5rem] m-10 border rounded-xl p-4">
   <div class="flex flex-row justify-between items-center">
     <a
       (click)="onPreviousMonthClick()"
-      class="cursor-pointer pe-2 py-2 flex flex-row items-center text-xs text-gray-500 gap-1">
-      <div class="border-s border-b border-blue-500 w-2 h-2 -rotate-45"></div>
+      class="cursor-pointer ps-0.5 py-2 flex flex-row items-center text-xs text-gray-500 gap-1">
+      <div class="border-s border-b border-blue-500 w-2 h-2 rtl:-rotate-45 ltr:rotate-45"></div>
       ماه قبل
     </a>
     <div class="flex justify-center text-blue-500 gap-2">
@@ -18,13 +17,13 @@
     </div>
     <div
       (click)="onNextMonthClick()"
-      class="cursor-pointer pe-2 py-2 flex flex-row items-center text-xs text-gray-500 gap-1">
+      class="cursor-pointer pe-0.5 py-2 flex flex-row items-center text-xs text-gray-500 gap-1">
       ماه بعد
-      <div class="border-e border-t border-blue-500 w-2 h-2 -rotate-45"></div>
+      <div class="border-e border-t border-blue-500 w-2 h-2 rtl:-rotate-45 ltr:rotate-45"></div>
     </div>
   </div>
 
-  <div class="w-auto inline-block mt-4">
+  <div class="flex flex-col mt-4">
     <div class="flex flex-row gap-2 text-sm bg-blue-500 text-white rounded-lg">
       <div class="flex w-10 h-10 items-center justify-center"
            *ngFor="let day of jalaliDateService.weekdaysShort()">{{day}}</div>
