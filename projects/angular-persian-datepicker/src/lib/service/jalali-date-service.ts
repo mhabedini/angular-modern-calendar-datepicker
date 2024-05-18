@@ -103,15 +103,18 @@ export class JalaliDateService implements DateServiceInterface {
       let firstWeekDay
       let lastWeekDay
 
-      if (weeks.includes(52)) {
-        if (week === 52) {
+      if (weeks.includes(53) || weeks.includes(52)) {
+        let highestWeek: 52 | 53 = 52
+        if (weeks.includes(53)) {
+          highestWeek = 53
+        }
+        if (week === highestWeek) {
           firstWeekDay = moment([year, 11]).week(week).startOf('week');
           lastWeekDay = moment([year, 11]).week(week).endOf('week');
-
         } else if (week === 1) {
           firstWeekDay = moment([year + 1, 0]).week(week).startOf('week');
           lastWeekDay = moment([year + 1, 0]).week(week).endOf('week');
-        } else if (week < 52 && week > 5) {
+        } else if (week < highestWeek && week > 5) {
           firstWeekDay = moment([year]).week(week).startOf('week');
           lastWeekDay = moment([year]).week(week).endOf('week');
         } else {
@@ -142,6 +145,7 @@ export class JalaliDateService implements DateServiceInterface {
       })
       calendar.push(finalWeeks);
     })
+
     return calendar
   }
 }

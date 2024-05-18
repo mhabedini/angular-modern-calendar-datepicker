@@ -2,6 +2,7 @@ import {Component, ElementRef, Input} from '@angular/core';
 import {JalaliDateService} from "../../../../angular-persian-datepicker/src/lib/service/jalali-date-service";
 import * as moment from "moment";
 import * as momentJalali from "jalali-moment";
+import {Moment} from "moment";
 
 @Component({
   selector: 'app-datepicker',
@@ -19,20 +20,20 @@ export class DatepickerComponent {
   currentMonth: any
 
   constructor(public readonly jalaliDateService: JalaliDateService, element: ElementRef) {
-    element.nativeElement.style.setProperty('--color-primary', this.hexToRgb('#7bb41b'))
-    this.loadData(moment().format('YYYY/MM/DD'))
+    element.nativeElement.style.setProperty('--color-primary', this.hexToRgb('#8a2635'))
+    this.loadData(moment().subtract(268, 'month'))
   }
 
   onPreviousMonthClick() {
-    this.loadData(this.dates[1][6].date.subtract(1, 'month').format('YYYY/MM/DD'))
+    this.loadData(this.dates[1][6].date.subtract(1, 'month'))
   }
 
   onNextMonthClick() {
-    this.loadData(this.dates[1][6].date.add(1, 'month').format('YYYY/MM/DD'))
+    this.loadData(this.dates[1][6].date.add(1, 'month'))
   }
 
-  loadData(date: string) {
-    this.dates = this.jalaliDateService.daysInMonth(date)
+  loadData(date: Moment) {
+    this.dates = this.jalaliDateService.daysInMonth(date.format('YYYY/MM/DD'))
     this.currentYear = this.dates[1][6].jDate.format('YYYY')
     this.currentMonth = this.dates[1][6].jDate.format('MMMM')
   }
@@ -51,4 +52,9 @@ export class DatepickerComponent {
   }
 
   protected readonly momentJalali = momentJalali;
+
+  onDateChange(value: string) {
+    this.loadData(moment(value))
+    this.selectedDate = moment(value).format('YYYY/MM/DD')
+  }
 }

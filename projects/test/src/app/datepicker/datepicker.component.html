@@ -50,9 +50,9 @@
           [class.text-primary]="day.isToday && day.isForCurrentMonth"
           [class.!border]="day.isToday && day.isForCurrentMonth"
           [class.border-primary]="day.isToday && day.isForCurrentMonth"
-          [class.!bg-primary]="selectedDate === day.date.format('YYYY/MM/DD')"
-          [class.!text-white]="selectedDate === day.date.format('YYYY/MM/DD')"
-          [class.dark:!text-white]="selectedDate === day.date.format('YYYY/MM/DD')"
+          [class.!bg-primary]="selectedDate === day.date.format('YYYY/MM/DD') && day.isForCurrentMonth"
+          [class.!text-white]="selectedDate === day.date.format('YYYY/MM/DD') && day.isForCurrentMonth"
+          [class.dark:!text-white]="selectedDate === day.date.format('YYYY/MM/DD') && day.isForCurrentMonth"
           (click)="day.isForCurrentMonth ? selectedDate = day.date.format('YYYY/MM/DD'): null"
           *ngFor="let day of week">
           <div class="flex flex-col w-full">
@@ -70,4 +70,8 @@
 
 <div class="mx-10">
   {{momentJalali(selectedDate).format('YYYY/MM/DD')}}
+</div>
+
+<div class="mx-10 mt-4">
+  <input #input (keydown.enter)="onDateChange(input.value)">
 </div>
