@@ -74,9 +74,10 @@ export class JalaliDateService implements DateServiceInterface {
   }
 
   daysInMonth(date: string): any[] {
-    const jDaysInMonth = momentJalali(date).jDaysInMonth();
-    const jMonth = momentJalali(date).jMonth()
-    const jYear = momentJalali(date).jYear()
+    const jalaliDate = momentJalali(date)
+    const jDaysInMonth = jalaliDate.jDaysInMonth();
+    const jMonth = jalaliDate.jMonth()
+    const jYear = jalaliDate.jYear()
 
     const startDate = moment(momentJalali(`${jYear}/${jMonth + 1}/01`, 'jYYYY/jMM/jDD').doAsGregorian().format('YYYY/MM/DD'))
     const endDate = moment(momentJalali(`${jYear}/${jMonth + 1}/${jDaysInMonth}`, 'jYYYY/jMM/jDD').doAsGregorian().format('YYYY/MM/DD'))
