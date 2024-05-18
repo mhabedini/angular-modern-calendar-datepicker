@@ -1,0 +1,37 @@
+<div class="flex">
+  <div class="w-auto inline-block p-4 border rounded-xl m-10">
+    <div class="flex flex-row gap-2 text-sm bg-blue-500 text-white rounded-lg">
+      <div class="flex w-10 h-10 items-center justify-center"
+           *ngFor="let day of jalaliDateService.weekdaysShort()">{{day}}</div>
+    </div>
+
+    <div class="flex flex-col mt-4 gap-4">
+      <div
+        *ngFor="let week of dates"
+        class="flex flex-row gap-2">
+        <div
+          class="flex w-10 cursor-pointer h-10 font-medium px-1 text-black justify-center rounded"
+          [class.!text-red-500]="day.weekIndex === 6"
+          [class.hover:text-blue-500]="day.isForCurrentMonth"
+          [class.hover:bg-blue-50]="day.isForCurrentMonth"
+          [class.!text-opacity-30]="!day.isForCurrentMonth"
+          [class.!cursor-default]="!day.isForCurrentMonth"
+          [class.!text-blue-500]="day.isToday && day.isForCurrentMonth"
+          [class.!border]="day.isToday && day.isForCurrentMonth"
+          [class.!border-blue-500]="day.isToday && day.isForCurrentMonth"
+          [class.!bg-blue-500]="selectedDate === day.date.format('YYYY/MM/DD')"
+          [class.!text-white]="selectedDate === day.date.format('YYYY/MM/DD')"
+          (click)="day.isForCurrentMonth ? selectedDate = day.date.format('YYYY/MM/DD'): null"
+          *ngFor="let day of week">
+          <div class="flex flex-col w-full">
+            <div class="flex flex-row justify-center">{{day.jDay}}</div>
+            <div class="flex flex-row justify-between items-center text-[.625rem] px-0.5 w-full">
+              <div>{{day.iDay}}</div>
+              <div class="mb-[2px] font-sansFaEn">{{day.day}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

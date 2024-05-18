@@ -22,7 +22,7 @@ export class GregorianDateService implements DateServiceInterface {
     return moment.weekdaysShort().map(value => value.substring(0, 2));
   }
 
-  daysInMonth(date: string) {
-    return moment(date).jDaysInMonth()
+  daysInMonth(date: string): any[] {
+    return []
   }
 }

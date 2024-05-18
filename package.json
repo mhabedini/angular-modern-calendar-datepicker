@@ -18,9 +18,12 @@
     "@angular/platform-browser": "^15.0.0",
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/router": "^15.0.0",
+    "@types/moment-hijri": "^2.1.4",
     "@types/moment-jalaali": "^0.7.9",
     "jalali-moment": "^3.3.11",
+    "moment-hijri": "^2.1.2",
     "moment-jalaali": "^0.10.0",
+    "moment-range": "^4.0.2",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"

@@ -7,5 +7,5 @@ export interface DateServiceInterface {
 
   weekdaysShort(): string[]
 
-  daysInMonth(date: string): number
+  daysInMonth(date: string): any[]
 }

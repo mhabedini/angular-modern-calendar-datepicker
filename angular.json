@@ -65,7 +65,10 @@
             "styles": [
               "projects/test/src/styles.sass"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "jalali-moment"
+            ]
           },
           "configurations": {
             "production": {
