@@ -3,21 +3,24 @@
     [class.dark]="darkMode"
     [dir]="dateService.config.rtl ? 'rtl' : 'ltr'"
     [class.font-sans_en]="calendarType === 'gregorian'"
-    class="flex flex-col w-[22.5rem] m-10 border rounded-xl p-4 bg-white dark:bg-gray-800">
-    <div class="flex flex-row justify-between items-center">
+    class="flex flex-col w-[22.5rem] m-10 border rounded-xl py-4 bg-white dark:bg-gray-800">
+    <div class="flex flex-row justify-between items-center px-4">
       <a
         (click)="onPreviousMonthClick()"
         class="cursor-pointer ps-0.5 py-2 leading-4 flex flex-row items-center text-xs text-gray-500 dark:text-gray-200 gap-1">
         <div class="border-s border-b border-primary w-2 h-2 rtl:-rotate-45 ltr:rotate-45"></div>
         {{dateService.translate.previousMonth}}
       </a>
-      <div class="flex justify-center text-primary gap-2">
-        <div class="rounded-full bg-primary bg-opacity-10 px-4 py-2 cursor-pointer font-bold text-sm">
+      <div
+        class="flex justify-center text-primary gap-2">
+        <div
+          (click)="onYearToggle()"
+          class="rounded-full bg-primary bg-opacity-10 px-4 py-2 cursor-pointer font-bold text-sm">
           {{currentYear}}
         </div>
 
         <div
-          (click)="calendarMode = 'month'"
+          (click)="onMonthToggle()"
           class="rounded-full bg-primary leading-4 bg-opacity-10 px-4 py-2 cursor-pointer font-bold text-sm">
           {{currentMonth}}
         </div>
@@ -32,7 +35,7 @@
 
     <div
       *ngIf="calendarMode === 'date'"
-      class="flex flex-col mt-4">
+      class="flex flex-col mt-4 px-4">
       <div class="flex flex-row gap-2 text-sm bg-primary text-white rounded-lg">
         <div
           [class.text-xs]="calendarType === 'hijri'"
@@ -76,7 +79,7 @@
         </div>
       </div>
     </div>
-    <div *ngIf="calendarMode === 'month'">
+    <div class=" px-4" *ngIf="calendarMode === 'month'">
       <div class="grid grid-cols-3 grid-rows-4 mt-4 gap-2">
         <div class="w-full flex items-center justify-center hover:font-bold
          h-16 border rounded-lg cursor-pointer text-sm hover:border-none
@@ -90,7 +93,24 @@
       </div>
     </div>
 
-    <div class="mt-3">
+    <div class="ps-4 pe-2" *ngIf="calendarMode === 'year'">
+      <div
+        class="flex flex-col mt-4 gap-2 h-80 overflow-y-scroll">
+        <div class="grid grid-cols-4 gap-2 mb-2" *uiScroll="let data of datasource">
+          <div class="w-full flex items-center justify-center hover:font-bold
+         h-10 border rounded-lg cursor-pointer text-sm hover:border-none gap-2
+         hover:bg-opacity-10 hover:bg-primary hover:text-primary"
+               *ngFor="let year of range(data * 4, data * 4 + 3, 1)"
+               [class.!border-primary]="year == currentYear"
+               [class.!text-primary]="year == currentYear"
+               (click)="changeCurrentYear(year)">
+            {{year}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-3 px-4">
       <a (click)="onGoToTodayClick()"
          class="h-10 bg-primary bg-opacity-10 font-bold dark:bg-opacity-20 rounded-lg text-primary text-sm flex items-center justify-center cursor-pointer">
         {{dateService.translate.goToToday}}
