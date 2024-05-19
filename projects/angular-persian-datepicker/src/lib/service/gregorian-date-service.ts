@@ -79,8 +79,8 @@ export class GregorianDateService implements DateServiceInterface {
     return date.format('YYYY')
   }
 
-  loadDaysInMonthWithYearAndMonth(year: number, month: number): any[] {
-    const date = moment([year, month, 1])
+  loadDaysInMonthWithYearAndMonth(year: number, month: string): any[] {
+    const date = moment([year, this.months().indexOf(month), 1])
     return this.daysInMonth(date.format('YYYY/MM/DD'))
   }
 }

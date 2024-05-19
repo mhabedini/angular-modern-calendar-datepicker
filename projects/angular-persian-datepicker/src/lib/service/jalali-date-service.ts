@@ -117,8 +117,8 @@ export class JalaliDateService implements DateServiceInterface {
     return calendar
   }
 
-  loadDaysInMonthWithYearAndMonth(jYear: number, jMonth: number): any[] {
-    const date = moment(momentJalali(`${jYear}/${jMonth + 1}/01`, 'jYYYY/jMM/jDD').doAsGregorian().format('YYYY/MM/DD'))
+  loadDaysInMonthWithYearAndMonth(jYear: number, jMonth: string): any[] {
+    const date = moment(momentJalali(`${jYear}/${this.months().indexOf(jMonth) + 1}/01`, 'jYYYY/jMM/jDD').doAsGregorian().format('YYYY/MM/DD'))
     return this.daysInMonth(date.format('YYYY/MM/DD'))
   }
 

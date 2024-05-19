@@ -15,7 +15,7 @@ import {IDatasource} from "ngx-ui-scroll";
 })
 export class DatepickerComponent implements OnInit {
   @Input() darkMode: boolean = false
-  @Input() primaryColor = '#58b038'
+  @Input() primaryColor = '#38b0ac'
   @Input() calendarType: 'jalali' | 'gregorian' | 'hijri' | string = 'jalali'
   @Input() format: any = 'YYYY/MM/DD';
 
@@ -78,6 +78,8 @@ export class DatepickerComponent implements OnInit {
       this.dateService = new HijriDateService();
       this.loadData(moment())
     }
+
+    this.scrollToYear()
   }
 
   onColorChanges(color: string) {
@@ -92,11 +94,11 @@ export class DatepickerComponent implements OnInit {
 
   protected readonly moment = moment;
 
-  changeCurrentMonth(month: string, i: number) {
-    this.dates = this.dateService.loadDaysInMonthWithYearAndMonth(this.currentYear, i)
+  changeCurrentMonth(month: string) {
+    this.dates = this.dateService.loadDaysInMonthWithYearAndMonth(this.currentYear, month)
     this.currentYear = this.dateService.getCurrentYear(this.dates[1][6].date)
     this.currentMonth = this.dateService.getCurrentMonth(this.dates[1][6].date)
-    this.scrollToIndex(Math.floor(parseInt(this.currentYear) / 4) - 2)
+    this.scrollToYear()
     this.calendarMode = 'date'
   }
 
@@ -105,8 +107,12 @@ export class DatepickerComponent implements OnInit {
     this.dates = this.dateService.loadDaysInMonthWithYearAndMonth(year, this.currentMonth)
     this.currentYear = this.dateService.getCurrentYear(this.dates[1][6].date)
     this.currentMonth = this.dateService.getCurrentMonth(this.dates[1][6].date)
-    this.scrollToIndex(Math.floor(parseInt(this.currentYear) / 4) - 2)
+    this.scrollToYear()
     this.calendarMode = 'month'
+  }
+
+  scrollToYear() {
+    this.scrollToIndex(Math.floor(parseInt(this.currentYear) / 4) - 2)
   }
 
   onMonthToggle() {

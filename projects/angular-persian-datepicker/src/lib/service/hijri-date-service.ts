@@ -129,8 +129,8 @@ export class HijriDateService implements DateServiceInterface {
     return date.format('iYYYY')
   }
 
-  loadDaysInMonthWithYearAndMonth(iYear: number, iMonth: number): any[] {
-    const date = moment(momentHijri(`${iYear}/${iMonth + 1}/01`, 'iYYYY/iMM/iDD').format('YYYY/MM/DD'))
+  loadDaysInMonthWithYearAndMonth(iYear: number, iMonth: string): any[] {
+    const date = moment(momentHijri(`${iYear}/${this.months().indexOf(iMonth) + 1}/01`, 'iYYYY/iMM/iDD').format('YYYY/MM/DD'))
     return this.daysInMonth(date.format('YYYY/MM/DD'))
   }
 }

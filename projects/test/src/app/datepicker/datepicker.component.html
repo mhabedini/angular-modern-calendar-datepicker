@@ -86,8 +86,8 @@
          hover:bg-opacity-10 hover:bg-primary hover:text-primary"
              [class.!border-primary]="month === currentMonth"
              [class.!text-primary]="month === currentMonth"
-             (click)="changeCurrentMonth(month, i)"
-             *ngFor="let month of dateService.months(); let i = index">
+             (click)="changeCurrentMonth(month)"
+             *ngFor="let month of dateService.months()">
           {{month}}
         </div>
       </div>
