@@ -1,5 +1,6 @@
 import * as moment from 'moment'
 import {DateServiceInterface} from "./date-service-interface";
+import {getWeekFirstAndLastDays, processDateRange} from "../helper/date-helper";
 import {extendMoment} from "moment-range";
 
 
@@ -7,7 +8,7 @@ export class GregorianDateService implements DateServiceInterface {
     translate = {
         goToToday: 'Select today',
         nextMonth: 'Next',
-        previousMonth: 'Previous',
+        previousMonth: 'Prev',
     };
 
     config = {
@@ -43,50 +44,14 @@ export class GregorianDateService implements DateServiceInterface {
         const startDate = moment([year, month, date.startOf('month').date()])
         const endDate = moment([year, month, date.endOf('month').date()])
 
+        const [weeks, startDateDayBefore, endDateDayAfter] = processDateRange(startDate, endDate)
+
         const momentRange: any = extendMoment(moment)
-        const monthRange = momentRange.range(startDate, endDate)
-
-        const weeks: any[] = [];
-        const days = Array.from(monthRange.by('day'));
-
-        days.forEach((it: any) => {
-            if (!weeks.includes(it.week())) {
-                console.log(it.week)
-                weeks.push(it.week());
-            }
-        })
-
         const calendar: any[] = []
         const now = moment()
-        const startDateDayBefore = startDate.subtract(1, 'days').startOf('day')
-        const endDateDayAfter = endDate.endOf('day')
 
-        weeks.forEach(week => {
-            let firstWeekDay
-            let lastWeekDay
-
-            if (weeks.includes(53) || weeks.includes(52)) {
-                let highestWeek: 52 | 53 = 52
-                if (weeks.includes(53)) {
-                    highestWeek = 53
-                }
-                if (week === highestWeek) {
-                    firstWeekDay = moment([year, 11]).week(week).startOf('week');
-                    lastWeekDay = moment([year, 11]).week(week).endOf('week');
-                } else if (week === 1) {
-                    firstWeekDay = moment([year + 1, 0]).week(week).startOf('week');
-                    lastWeekDay = moment([year + 1, 0]).week(week).endOf('week');
-                } else if (week < highestWeek && week > 5) {
-                    firstWeekDay = moment([year]).week(week).startOf('week');
-                    lastWeekDay = moment([year]).week(week).endOf('week');
-                } else {
-                    firstWeekDay = moment([year + 1]).week(week).startOf('week');
-                    lastWeekDay = moment([year + 1]).week(week).endOf('week');
-                }
-            } else {
-                firstWeekDay = moment([year]).week(week).startOf('week');
-                lastWeekDay = moment([year]).week(week).endOf('week');
-            }
+        weeks.forEach((week: any) => {
+            let [firstWeekDay, lastWeekDay] = getWeekFirstAndLastDays(weeks, week, year)
 
             const weekRange = momentRange.range(firstWeekDay, lastWeekDay)
             const finalWeeks: any[] = []
