@@ -29,7 +29,9 @@
 
         <div class="flex flex-col mt-4">
             <div class="flex flex-row gap-2 text-sm bg-primary text-white rounded-lg">
-                <div class="flex w-10 h-10 items-center justify-center"
+                <div
+                        [class.text-xs]="calendarType === 'hijri'"
+                        class="flex w-10 h-10 items-center justify-center"
                      *ngFor="let day of dateService.weekdaysShort()">{{day}}</div>
             </div>
 

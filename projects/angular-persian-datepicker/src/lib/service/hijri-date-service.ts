@@ -23,44 +23,60 @@ export class HijriDateService implements DateServiceInterface {
 
     months(): string[] {
         return [
-            "فروردین",
-            "اردیبهشت",
-            "خرداد",
-            "تیر",
-            "مرداد",
-            "شهریور",
-            "مهر",
-            "آبان",
-            "آذر",
-            "دی",
-            "بهمن",
-            "اسفند",
+            "محرم",
+            "صفر",
+            "ربیع الاول",
+            "ربیع الثانی",
+            "جمادی الاول",
+            "جمادی الثانی",
+            "رجب",
+            "شعبان",
+            "رمضان",
+            "شوال",
+            "ذیقعده",
+            "ذیحجه",
         ];
     }
 
     monthsShort(): string[] {
         return [
-            "فروردین",
-            "اردیبهشت",
-            "خرداد",
-            "تیر",
-            "مرداد",
-            "شهریور",
-            "مهر",
-            "آبان",
-            "آذر",
-            "دی",
-            "بهمن",
-            "اسفند",
+            "محرم",
+            "صفر",
+            "ربیع الاول",
+            "ربیع الثانی",
+            "جمادی الاول",
+            "جمادی الثانی",
+            "رجب",
+            "شعبان",
+            "رمضان",
+            "شوال",
+            "ذیقعده",
+            "ذیحجه",
         ];
     }
 
     weekdays(): string[] {
-        return momentHijri.weekdays();
+        return [
+            "السبت",
+            "الأحد",
+            "الأثنين",
+            "الثلاثاء",
+            "الأربعاء",
+            "الخميس",
+            "الجمعه",
+        ];
     }
 
     weekdaysShort(): string[] {
-        return momentHijri.weekdaysShort();
+        return [
+            "السبت",
+            "الأحد",
+            "الأثنين",
+            "الثلاثاء",
+            "الأربعاء",
+            "الخميس",
+            "الجمعه",
+        ];
     }
 
     daysInMonth(date: string): any[] {
@@ -103,5 +119,13 @@ export class HijriDateService implements DateServiceInterface {
         })
 
         return calendar
+    }
+
+    getCurrentMonth(date: any): string {
+        return this.months()[date.iMonth()]
+    }
+
+    getCurrentYear(date: any): string {
+        return date.format('iYYYY')
     }
 }
