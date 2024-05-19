@@ -51,16 +51,16 @@
                             [class.text-primary]="day.isToday && day.isForCurrentMonth"
                             [class.!border]="day.isToday && day.isForCurrentMonth"
                             [class.border-primary]="day.isToday && day.isForCurrentMonth"
-                            [class.!bg-primary]="selectedDate === day.gDate.format('YYYY/MM/DD') && day.isForCurrentMonth"
-                            [class.!text-white]="selectedDate === day.gDate.format('YYYY/MM/DD') && day.isForCurrentMonth"
-                            [class.dark:!text-white]="selectedDate === day.gDate.format('YYYY/MM/DD') && day.isForCurrentMonth"
-                            (click)="day.isForCurrentMonth ? selectedDate = day.gDate.format('YYYY/MM/DD'): null"
+                            [class.!bg-primary]="selectedDate === day.gDate.format(format) && day.isForCurrentMonth"
+                            [class.!text-white]="selectedDate === day.gDate.format(format) && day.isForCurrentMonth"
+                            [class.dark:!text-white]="selectedDate === day.gDate.format(format) && day.isForCurrentMonth"
+                            (click)="day.isForCurrentMonth ? selectedDate = day.gDate.format(format): null"
                             *ngFor="let day of week">
                         <div
                                 [ngClass]="'items-center justify-center'"
                                 class="flex flex-col w-full">
                             <div class="flex flex-row justify-center leading-4">{{day.day}}</div>
-                            <div *ngIf="day.gDay && day.iDay" class="flex-row justify-between items-center text-[.625rem] px-0.5 w-full hidden">
+                            <div class="flex-row justify-between items-center text-[.625rem] px-0.5 w-full hidden">
                                 <div>{{day.iDay}}</div>
                                 <div class="mb-[2px] font-sans_en">{{day.gDay}}</div>
                             </div>
@@ -77,20 +77,20 @@
         </div>
     </div>
 
-    <div class="flex flex-col my-10">
+    <div dir="auto" class="flex flex-col my-10">
         <div class="flex flex-col gap-2 ">
-            <label class="text-sm">تاریخ به میلادی</label>
+            <label class="text-sm">تاریخ خروجی</label>
             <input #input
                    [ngModel]="selectedDate"
                    class="!border !outline-none px-2 border-primary rounded !h-10 font-sans_en"
                    (keydown.enter)="onDateChange(input.value)">
         </div>
         <div class="mt-6 flex flex-col gap-2">
-            <label class="text-sm">تاریخ به شمسی</label>
-            <input [ngModel]=""
+            <label class="text-sm">فرمت تاریخ (بعد از تغییر enter را بزنید)</label>
+            <input [ngModel]="format"
                    class="!border !outline-none px-2 border-primary rounded !h-10"
-                   #inputJalali
-                   (keydown.enter)="onJalaliDateChange(inputJalali.value)">
+                   #inputFormat
+                   (keydown.enter)="onDateFormatChange(inputFormat.value)">
         </div>
 
         <div class="mt-6 flex flex-col gap-2">
@@ -104,7 +104,7 @@
         <div class="mt-6 flex flex-col gap-2">
             حالت راست به چپ
             <label class="text-sm switch">
-                <input [(ngModel)]="rtl" type="checkbox">
+                <input [(ngModel)]="dateService.config.rtl" type="checkbox">
                 <span class="slider round"></span>
             </label>
         </div>
@@ -125,6 +125,7 @@
                     (change)="onCalendarTypeChange(calendarTypeInput.value)"
                     class="!border !outline-none px-2 border-primary rounded !h-10">
                 <option value="jalali">جلالی</option>
+                <option value="hijri">حجری</option>
                 <option value="gregorian">Gregorian</option>
             </select>
         </div>

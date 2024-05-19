@@ -1,10 +1,10 @@
-import * as momentJalali from 'jalali-moment'
 import * as moment from 'moment'
+import * as momentHijri from 'moment-hijri'
 import {extendMoment} from 'moment-range';
 import {DateServiceInterface} from "./date-service-interface";
 import {getWeekFirstAndLastDays, processDateRange} from "../helper/date-helper";
 
-export class JalaliDateService implements DateServiceInterface {
+export class HijriDateService implements DateServiceInterface {
 
     translate = {
         goToToday: 'برو به امروز',
@@ -18,7 +18,7 @@ export class JalaliDateService implements DateServiceInterface {
     }
 
     constructor() {
-        momentJalali.locale('fa', {useGregorianParser: true})
+        momentHijri.locale('ar-SA', {useGregorianParser: true})
     }
 
     months(): string[] {
@@ -56,38 +56,25 @@ export class JalaliDateService implements DateServiceInterface {
     }
 
     weekdays(): string[] {
-        return [
-            "شنبه",
-            "یکشنبه",
-            "دوشنبه",
-            "سه شنبه",
-            "چهارشنبه",
-            "پنجشنبه",
-            "جمعه",
-        ];
+        return momentHijri.weekdays();
     }
 
     weekdaysShort(): string[] {
-        return [
-            "ش",
-            "ی",
-            "د",
-            "س",
-            "چ",
-            "پ",
-            "ج"
-        ];
+        return momentHijri.weekdaysShort();
     }
 
     daysInMonth(date: string): any[] {
-        const jalaliDate = momentJalali(date)
-        const jDaysInMonth = jalaliDate.jDaysInMonth();
-        const jMonth = jalaliDate.jMonth()
-        const jYear = jalaliDate.jYear()
+        const hijriDate = momentHijri(date)
+        const iDaysInMonth = hijriDate.iDaysInMonth();
+        const iMonth = hijriDate.iMonth()
+        const iYear = hijriDate.iYear()
 
-        const startDate = moment(momentJalali(`${jYear}/${jMonth + 1}/01`, 'jYYYY/jMM/jDD').doAsGregorian().format('YYYY/MM/DD'))
-        const endDate = moment(momentJalali(`${jYear}/${jMonth + 1}/${jDaysInMonth}`, 'jYYYY/jMM/jDD').doAsGregorian().format('YYYY/MM/DD'))
+        const startDate = moment(momentHijri(`${iYear}/${iMonth + 1}/01`, 'iYYYY/iMM/iDD').format('YYYY/MM/DD'))
+        const endDate = moment(momentHijri(`${iYear}/${iMonth + 1}/${iDaysInMonth}`, 'iYYYY/iMM/iDD').format('YYYY/MM/DD'))
         const year = moment(startDate).year()
+
+        console.log(startDate);
+        console.log(endDate);
 
         const [weeks, startDateDayBefore, endDateDayAfter] = processDateRange(startDate, endDate)
 
@@ -101,12 +88,13 @@ export class JalaliDateService implements DateServiceInterface {
             const weekRange = momentRange.range(firstWeekDay, lastWeekDay)
             const finalWeeks: any[] = []
             Array.from(weekRange.by('day')).forEach((day: any, index) => {
-                const jDate = momentJalali(day)
+                const iDate = momentHijri(day.format('YYYY/MM/DD'), 'YYYY/MM/DD')
+                console.log(iDate.format('YYYY/MM/DD'))
                 finalWeeks.push({
                     gDate: day,
-                    date: jDate,
+                    date: iDate,
                     weekIndex: index,
-                    day: jDate.date(),
+                    day: iDate.iDate(),
                     isToday: day.isSame(now, "day"),
                     isForCurrentMonth: day.isBetween(startDateDayBefore, endDateDayAfter)
                 })

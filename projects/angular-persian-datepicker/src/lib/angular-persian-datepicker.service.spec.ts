@@ -1,5 +1,5 @@
 import {TestBed} from '@angular/core/testing';
-import {JalaliDateService} from "./service/jalali-date-service";
+import {HijriDateService} from "./service/hijri-date-service";
 import {DateServiceInterface} from "./service/date-service-interface";
 
 describe('AngularPersianDatepickerService', () => {
@@ -7,7 +7,7 @@ describe('AngularPersianDatepickerService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(JalaliDateService);
+    service = TestBed.inject(HijriDateService);
   });
 
   it('should be created', () => {

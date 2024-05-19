@@ -1,10 +1,10 @@
 import {Component, ElementRef, Input} from '@angular/core';
 import * as moment from "moment";
 import {Moment} from "moment";
-import * as momentJalali from "jalali-moment";
 import {GregorianDateService} from "../../../../angular-persian-datepicker/src/lib/service/gregorian-date-service";
-import {JalaliDateService} from "../../../../angular-persian-datepicker/src/lib/service/jalali-date-service";
+import {HijriDateService} from "../../../../angular-persian-datepicker/src/lib/service/hijri-date-service";
 import {DateServiceInterface} from "../../../../angular-persian-datepicker/src/lib/service/date-service-interface";
+import {JalaliDateService} from "../../../../angular-persian-datepicker/src/lib/service/jalali-date-service";
 
 @Component({
     selector: 'app-datepicker',
@@ -14,20 +14,23 @@ import {DateServiceInterface} from "../../../../angular-persian-datepicker/src/l
 export class DatepickerComponent {
     @Input() darkMode: boolean = false
     @Input() primaryColor = '#58b038'
-    @Input() calendarType: 'jalali' | 'gregorian' | string = 'jalali'
+    @Input() calendarType: 'jalali' | 'gregorian' | 'hijri' | string = 'jalali'
+    @Input() format: any = 'YYYY/MM/DD';
 
-    rtl: boolean = true
-    selectedDate: any = moment().format('YYYY/MM/DD')
+    selectedDate: any
     dates!: any
     currentYear: any
     currentMonth: any
     dateService!: DateServiceInterface
 
     constructor(private readonly element: ElementRef) {
-        momentJalali.locale('fa', {useGregorianParser: true})
         this.dateService = new JalaliDateService()
         this.loadData(moment())
         this.onColorChanges(this.primaryColor)
+    }
+
+    ngOnInit() {
+        this.selectedDate = moment().format('YYYY/MM/DD')
     }
 
     onPreviousMonthClick() {
@@ -53,17 +56,14 @@ export class DatepickerComponent {
         return `${r} ${g} ${b}`;
     }
 
-    protected readonly momentJalali = momentJalali;
-
     onDateChange(value: string) {
         this.loadData(moment(value))
-        this.selectedDate = moment(value).format('YYYY/MM/DD')
+        this.selectedDate = moment(value).format(this.format)
     }
 
-    onJalaliDateChange(value: string) {
-        const date = moment(momentJalali(value, 'jYYYY/jMM/jDD').doAsGregorian().format('YYYY/MM/DD'))
-        this.loadData(date);
-        this.selectedDate = date.format('YYYY/MM/DD')
+    onDateFormatChange(value: string) {
+        this.format = value
+        this.selectedDate = moment(this.selectedDate).format(this.format)
     }
 
     onCalendarTypeChange(type: string) {
@@ -73,6 +73,9 @@ export class DatepickerComponent {
             this.loadData(moment())
         } else if (type === 'gregorian') {
             this.dateService = new GregorianDateService();
+            this.loadData(moment())
+        } else if (type === 'hijri') {
+            this.dateService = new HijriDateService();
             this.loadData(moment())
         }
     }
