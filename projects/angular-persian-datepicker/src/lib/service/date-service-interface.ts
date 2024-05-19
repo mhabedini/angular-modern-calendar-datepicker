@@ -1,4 +1,15 @@
 export interface DateServiceInterface {
+  translate: {
+    goToToday: string
+    nextMonth: string
+    previousMonth: string
+  }
+
+  config: {
+    rtl: boolean
+    WeekendDays: number[]
+  }
+
   months(): string[]
 
   monthsShort(): string[]
