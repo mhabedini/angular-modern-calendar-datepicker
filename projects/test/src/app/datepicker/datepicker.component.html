@@ -1,135 +1,154 @@
 <div class="flex flex-row items-start">
-    <div [class.dark]="darkMode"
-         [dir]="dateService.config.rtl ? 'rtl' : 'ltr'"
-         [class.font-sans_en]="calendarType === 'gregorian'"
-         class="flex flex-col w-[22.5rem] m-10 border rounded-xl p-4 bg-white dark:bg-gray-800">
-        <div class="flex flex-row justify-between items-center">
-            <a
-                    (click)="onPreviousMonthClick()"
-                    class="cursor-pointer ps-0.5 py-2 leading-4 flex flex-row items-center text-xs text-gray-500 dark:text-gray-200 gap-1">
-                <div class="border-s border-b border-primary w-2 h-2 rtl:-rotate-45 ltr:rotate-45"></div>
-                {{dateService.translate.previousMonth}}
-            </a>
-            <div class="flex justify-center text-primary gap-2">
-                <div class="rounded-full bg-primary bg-opacity-10 px-4 py-2 cursor-pointer font-bold text-sm">
-                    {{currentYear}}
-                </div>
+  <div
+    [class.dark]="darkMode"
+    [dir]="dateService.config.rtl ? 'rtl' : 'ltr'"
+    [class.font-sans_en]="calendarType === 'gregorian'"
+    class="flex flex-col w-[22.5rem] m-10 border rounded-xl p-4 bg-white dark:bg-gray-800">
+    <div class="flex flex-row justify-between items-center">
+      <a
+        (click)="onPreviousMonthClick()"
+        class="cursor-pointer ps-0.5 py-2 leading-4 flex flex-row items-center text-xs text-gray-500 dark:text-gray-200 gap-1">
+        <div class="border-s border-b border-primary w-2 h-2 rtl:-rotate-45 ltr:rotate-45"></div>
+        {{dateService.translate.previousMonth}}
+      </a>
+      <div class="flex justify-center text-primary gap-2">
+        <div class="rounded-full bg-primary bg-opacity-10 px-4 py-2 cursor-pointer font-bold text-sm">
+          {{currentYear}}
+        </div>
 
-                <div class="rounded-full bg-primary leading-4 bg-opacity-10 px-4 py-2 cursor-pointer font-bold text-sm">
-                    {{currentMonth}}
-                </div>
-            </div>
+        <div
+          (click)="calendarMode = 'month'"
+          class="rounded-full bg-primary leading-4 bg-opacity-10 px-4 py-2 cursor-pointer font-bold text-sm">
+          {{currentMonth}}
+        </div>
+      </div>
+      <div
+        (click)="onNextMonthClick()"
+        class="cursor-pointer pe-0.5 py-2 flex flex-row items-center text-xs text-gray-500 dark:text-gray-200 gap-1">
+        {{dateService.translate.nextMonth}}
+        <div class="border-e border-t border-primary w-2 h-2 rtl:-rotate-45 ltr:rotate-45"></div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="calendarMode === 'date'"
+      class="flex flex-col mt-4">
+      <div class="flex flex-row gap-2 text-sm bg-primary text-white rounded-lg">
+        <div
+          [class.text-xs]="calendarType === 'hijri'"
+          class="flex w-10 h-10 items-center justify-center"
+          *ngFor="let day of dateService.weekdaysShort()">{{day}}</div>
+      </div>
+
+      <div class="flex flex-col mt-4 gap-4">
+        <div
+          *ngFor="let week of dates"
+          class="flex flex-row gap-2">
+          <div
+            class="flex w-10 cursor-pointer h-10 p-1 font-medium text-black dark:text-white justify-center rounded"
+            [class.!text-red-500]="dateService.config.WeekendDays.includes(day.weekIndex)"
+            [class.dark:!text-red-400]="dateService.config.WeekendDays.includes(day.weekIndex)"
+            [class.hover:text-primary]="day.isForCurrentMonth"
+            [class.hover:bg-primary]="day.isForCurrentMonth"
+            [class.hover:bg-opacity-10]="day.isForCurrentMonth"
+            [class.dark:hover:bg-opacity-20]="day.isForCurrentMonth"
+            [class.!text-opacity-30]="!day.isForCurrentMonth"
+            [class.dark:!text-opacity-40]="!day.isForCurrentMonth"
+            [class.!cursor-default]="!day.isForCurrentMonth"
+            [class.text-primary]="day.isToday && day.isForCurrentMonth"
+            [class.!border]="day.isToday && day.isForCurrentMonth"
+            [class.border-primary]="day.isToday && day.isForCurrentMonth"
+            [class.!bg-primary]="selectedDate === day.gDate.format(format) && day.isForCurrentMonth"
+            [class.!text-white]="selectedDate === day.gDate.format(format) && day.isForCurrentMonth"
+            [class.dark:!text-white]="selectedDate === day.gDate.format(format) && day.isForCurrentMonth"
+            (click)="day.isForCurrentMonth ? selectedDate = day.gDate.format(format): null"
+            *ngFor="let day of week">
             <div
-                    (click)="onNextMonthClick()"
-                    class="cursor-pointer pe-0.5 py-2 flex flex-row items-center text-xs text-gray-500 dark:text-gray-200 gap-1">
-                {{dateService.translate.nextMonth}}
-                <div class="border-e border-t border-primary w-2 h-2 rtl:-rotate-45 ltr:rotate-45"></div>
+              [ngClass]="'items-center justify-center'"
+              class="flex flex-col w-full">
+              <div class="flex flex-row justify-center leading-4">{{day.day}}</div>
+              <div class="flex-row justify-between items-center text-[.625rem] px-0.5 w-full hidden">
+                <div>{{day.iDay}}</div>
+                <div class="mb-[2px] font-sans_en">{{day.gDay}}</div>
+              </div>
             </div>
+          </div>
         </div>
-
-        <div class="flex flex-col mt-4">
-            <div class="flex flex-row gap-2 text-sm bg-primary text-white rounded-lg">
-                <div
-                        [class.text-xs]="calendarType === 'hijri'"
-                        class="flex w-10 h-10 items-center justify-center"
-                     *ngFor="let day of dateService.weekdaysShort()">{{day}}</div>
-            </div>
-
-            <div class="flex flex-col mt-4 gap-4">
-                <div
-                        *ngFor="let week of dates"
-                        class="flex flex-row gap-2">
-                    <div
-                            class="flex w-10 cursor-pointer h-10 p-1 font-medium text-black dark:text-white justify-center rounded"
-                            [class.!text-red-500]="dateService.config.WeekendDays.includes(day.weekIndex)"
-                            [class.dark:!text-red-400]="dateService.config.WeekendDays.includes(day.weekIndex)"
-                            [class.hover:text-primary]="day.isForCurrentMonth"
-                            [class.hover:bg-primary]="day.isForCurrentMonth"
-                            [class.hover:bg-opacity-10]="day.isForCurrentMonth"
-                            [class.dark:hover:bg-opacity-20]="day.isForCurrentMonth"
-                            [class.!text-opacity-30]="!day.isForCurrentMonth"
-                            [class.dark:!text-opacity-40]="!day.isForCurrentMonth"
-                            [class.!cursor-default]="!day.isForCurrentMonth"
-                            [class.text-primary]="day.isToday && day.isForCurrentMonth"
-                            [class.!border]="day.isToday && day.isForCurrentMonth"
-                            [class.border-primary]="day.isToday && day.isForCurrentMonth"
-                            [class.!bg-primary]="selectedDate === day.gDate.format(format) && day.isForCurrentMonth"
-                            [class.!text-white]="selectedDate === day.gDate.format(format) && day.isForCurrentMonth"
-                            [class.dark:!text-white]="selectedDate === day.gDate.format(format) && day.isForCurrentMonth"
-                            (click)="day.isForCurrentMonth ? selectedDate = day.gDate.format(format): null"
-                            *ngFor="let day of week">
-                        <div
-                                [ngClass]="'items-center justify-center'"
-                                class="flex flex-col w-full">
-                            <div class="flex flex-row justify-center leading-4">{{day.day}}</div>
-                            <div class="flex-row justify-between items-center text-[.625rem] px-0.5 w-full hidden">
-                                <div>{{day.iDay}}</div>
-                                <div class="mb-[2px] font-sans_en">{{day.gDay}}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      </div>
+    </div>
+    <div *ngIf="calendarMode === 'month'">
+      <div class="grid grid-cols-3 grid-rows-4 mt-4 gap-2">
+        <div class="w-full flex items-center justify-center hover:font-bold
+         h-16 border rounded-lg cursor-pointer text-sm hover:border-none
+         hover:bg-opacity-10 hover:bg-primary hover:text-primary"
+             [class.!border-primary]="month === currentMonth"
+             [class.!text-primary]="month === currentMonth"
+             (click)="changeCurrentMonth(month, i)"
+             *ngFor="let month of dateService.months(); let i = index">
+          {{month}}
         </div>
-        <div class="mt-3">
-            <a (click)="onGoToTodayClick()"
-               class="h-10 bg-primary bg-opacity-10 font-bold dark:bg-opacity-20 rounded-lg text-primary text-sm flex items-center justify-center cursor-pointer">
-                {{dateService.translate.goToToday}}
-            </a>
-        </div>
+      </div>
     </div>
 
-    <div dir="auto" class="flex flex-col my-10">
-        <div class="flex flex-col gap-2 ">
-            <label class="text-sm">تاریخ خروجی</label>
-            <input #input
-                   [ngModel]="selectedDate"
-                   class="!border !outline-none px-2 border-primary rounded !h-10 font-sans_en"
-                   (keydown.enter)="onDateChange(input.value)">
-        </div>
-        <div class="mt-6 flex flex-col gap-2">
-            <label class="text-sm">فرمت تاریخ (بعد از تغییر enter را بزنید)</label>
-            <input [ngModel]="format"
-                   class="!border !outline-none px-2 border-primary rounded !h-10"
-                   #inputFormat
-                   (keydown.enter)="onDateFormatChange(inputFormat.value)">
-        </div>
-
-        <div class="mt-6 flex flex-col gap-2">
-            حالت تاریک
-            <label class="text-sm switch">
-                <input [(ngModel)]="darkMode" type="checkbox">
-                <span class="slider round"></span>
-            </label>
-        </div>
-
-        <div class="mt-6 flex flex-col gap-2">
-            حالت راست به چپ
-            <label class="text-sm switch">
-                <input [(ngModel)]="dateService.config.rtl" type="checkbox">
-                <span class="slider round"></span>
-            </label>
-        </div>
-
-        <div class="mt-6 flex flex-col gap-2">
-            <label class="text-sm">انتخاب رنگ</label>
-            <input
-                    (colorPickerChange)="onColorChanges($event)"
-                    [(ngModel)]="primaryColor"
-                    class="!border !outline-none px-2 border-primary rounded !h-10"
-                    [(colorPicker)]="primaryColor" #colorInput (input)="onColorChanges(colorInput.value)"/>
-        </div>
-
-        <div class="mt-6 flex flex-col gap-2">
-            <label class="text-sm">انتخاب نوع تقویم</label>
-            <select
-                    #calendarTypeInput
-                    (change)="onCalendarTypeChange(calendarTypeInput.value)"
-                    class="!border !outline-none px-2 border-primary rounded !h-10">
-                <option value="jalali">جلالی</option>
-                <option value="hijri">حجری</option>
-                <option value="gregorian">Gregorian</option>
-            </select>
-        </div>
+    <div class="mt-3">
+      <a (click)="onGoToTodayClick()"
+         class="h-10 bg-primary bg-opacity-10 font-bold dark:bg-opacity-20 rounded-lg text-primary text-sm flex items-center justify-center cursor-pointer">
+        {{dateService.translate.goToToday}}
+      </a>
     </div>
+  </div>
+
+  <div dir="auto" class="flex flex-col my-10">
+    <div class="flex flex-col gap-2 ">
+      <label class="text-sm">تاریخ خروجی</label>
+      <input #input
+             [ngModel]="selectedDate"
+             class="!border !outline-none px-2 border-primary rounded !h-10 font-sans_en"
+             (keydown.enter)="onDateChange(input.value)">
+    </div>
+    <div class="mt-6 flex flex-col gap-2">
+      <label class="text-sm">فرمت تاریخ (بعد از تغییر enter را بزنید)</label>
+      <input [ngModel]="format"
+             class="!border !outline-none px-2 border-primary rounded !h-10"
+             #inputFormat
+             (keydown.enter)="onDateFormatChange(inputFormat.value)">
+    </div>
+
+    <div class="mt-6 flex flex-col gap-2">
+      حالت تاریک
+      <label class="text-sm switch">
+        <input [(ngModel)]="darkMode" type="checkbox">
+        <span class="slider round"></span>
+      </label>
+    </div>
+
+    <div class="mt-6 flex flex-col gap-2">
+      حالت راست به چپ
+      <label class="text-sm switch">
+        <input [(ngModel)]="dateService.config.rtl" type="checkbox">
+        <span class="slider round"></span>
+      </label>
+    </div>
+
+    <div class="mt-6 flex flex-col gap-2">
+      <label class="text-sm">انتخاب رنگ</label>
+      <input
+        (colorPickerChange)="onColorChanges($event)"
+        [(ngModel)]="primaryColor"
+        class="!border !outline-none px-2 border-primary rounded !h-10"
+        [(colorPicker)]="primaryColor" #colorInput (input)="onColorChanges(colorInput.value)"/>
+    </div>
+
+    <div class="mt-6 flex flex-col gap-2">
+      <label class="text-sm">انتخاب نوع تقویم</label>
+      <select
+        #calendarTypeInput
+        (change)="onCalendarTypeChange(calendarTypeInput.value)"
+        class="!border !outline-none px-2 border-primary rounded !h-10">
+        <option value="jalali">جلالی</option>
+        <option value="hijri">حجری</option>
+        <option value="gregorian">Gregorian</option>
+      </select>
+    </div>
+  </div>
 </div>
