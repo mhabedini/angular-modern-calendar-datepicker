@@ -19,4 +19,8 @@ export interface DateServiceInterface {
   weekdaysShort(): string[]
 
   daysInMonth(date: string): any[]
+
+  getCurrentMonth(date: any): string
+
+  getCurrentYear(date: any): string
 }

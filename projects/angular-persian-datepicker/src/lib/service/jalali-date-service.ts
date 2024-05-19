@@ -116,4 +116,12 @@ export class JalaliDateService implements DateServiceInterface {
 
         return calendar
     }
+
+    getCurrentMonth(date: any): string {
+        return date.format('MMMM')
+    }
+
+    getCurrentYear(date: any): string {
+        return date.format('YYYY')
+    }
 }

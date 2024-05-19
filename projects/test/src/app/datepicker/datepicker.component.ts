@@ -43,8 +43,8 @@ export class DatepickerComponent {
 
     loadData(date: Moment) {
         this.dates = this.dateService.daysInMonth(date.format('YYYY/MM/DD'))
-        this.currentYear = this.dates[1][6].date.format('YYYY')
-        this.currentMonth = this.dates[1][6].date.format('MMMM')
+        this.currentYear = this.dateService.getCurrentYear(this.dates[1][6].date)
+        this.currentMonth = this.dateService.getCurrentMonth(this.dates[1][6].date)
     }
 
     hexToRgb(hex: string): string {
