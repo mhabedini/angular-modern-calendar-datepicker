@@ -23,4 +23,6 @@ export interface DateServiceInterface {
   getCurrentMonth(date: any): string
 
   getCurrentYear(date: any): string
+
+  loadDaysInMonthWithYearAndMonth(year: number, month: number): any[]
 }

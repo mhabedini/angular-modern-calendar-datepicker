@@ -5,6 +5,7 @@ import {GregorianDateService} from "../../../../angular-persian-datepicker/src/l
 import {HijriDateService} from "../../../../angular-persian-datepicker/src/lib/service/hijri-date-service";
 import {DateServiceInterface} from "../../../../angular-persian-datepicker/src/lib/service/date-service-interface";
 import {JalaliDateService} from "../../../../angular-persian-datepicker/src/lib/service/jalali-date-service";
+import {hexToRgb} from "../../../../angular-persian-datepicker/src/lib/helper/color-helper";
 
 @Component({
     selector: 'app-datepicker',
@@ -16,6 +17,8 @@ export class DatepickerComponent {
     @Input() primaryColor = '#58b038'
     @Input() calendarType: 'jalali' | 'gregorian' | 'hijri' | string = 'jalali'
     @Input() format: any = 'YYYY/MM/DD';
+
+    calendarMode: "date" | "month" | "year" = "date"
 
     selectedDate: any
     dates!: any
@@ -47,15 +50,6 @@ export class DatepickerComponent {
         this.currentMonth = this.dateService.getCurrentMonth(this.dates[1][6].date)
     }
 
-    hexToRgb(hex: string): string {
-        hex = hex.replace('#', '');
-        const bigint = parseInt(hex, 16);
-        const r = (bigint >> 16) & 255;
-        const g = (bigint >> 8) & 255;
-        const b = bigint & 255;
-        return `${r} ${g} ${b}`;
-    }
-
     onDateChange(value: string) {
         this.loadData(moment(value))
         this.selectedDate = moment(value).format(this.format)
@@ -81,7 +75,7 @@ export class DatepickerComponent {
     }
 
     onColorChanges(color: string) {
-        this.element.nativeElement.style.setProperty('--color-primary', this.hexToRgb(color));
+        this.element.nativeElement.style.setProperty('--color-primary', hexToRgb(color));
     }
 
     onGoToTodayClick() {
@@ -89,4 +83,14 @@ export class DatepickerComponent {
         this.loadData(now)
         this.onDateChange(now.format('YYYY/MM/DD'))
     }
+
+  protected readonly moment = moment;
+
+  changeCurrentMonth(month: string, i: number) {
+    this.dates = this.dateService.loadDaysInMonthWithYearAndMonth(this.currentYear, i)
+    this.currentYear = this.dateService.getCurrentYear(this.dates[1][6].date)
+    this.currentMonth = this.dateService.getCurrentMonth(this.dates[1][6].date)
+
+    this.calendarMode = 'date'
+  }
 }
