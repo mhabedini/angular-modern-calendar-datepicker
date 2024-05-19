@@ -1,8 +1,10 @@
 import {Component, ElementRef, Input} from '@angular/core';
-import {JalaliDateService} from "../../../../angular-persian-datepicker/src/lib/service/jalali-date-service";
 import * as moment from "moment";
 import {Moment} from "moment";
 import * as momentJalali from "jalali-moment";
+import {GregorianDateService} from "../../../../angular-persian-datepicker/src/lib/service/gregorian-date-service";
+import {JalaliDateService} from "../../../../angular-persian-datepicker/src/lib/service/jalali-date-service";
+import {DateServiceInterface} from "../../../../angular-persian-datepicker/src/lib/service/date-service-interface";
 
 @Component({
     selector: 'app-datepicker',
@@ -11,31 +13,35 @@ import * as momentJalali from "jalali-moment";
 })
 export class DatepickerComponent {
     @Input() darkMode: boolean = false
-    @Input() rtl: boolean = true
-    @Input() primaryColor = '#ff516c'
+    @Input() primaryColor = '#58b038'
+    @Input() calendarType: 'jalali' | 'gregorian' | string = 'jalali'
 
+    rtl: boolean = true
     selectedDate: any = moment().format('YYYY/MM/DD')
     dates!: any
     currentYear: any
     currentMonth: any
+    dateService!: DateServiceInterface
 
-    constructor(public readonly jalaliDateService: JalaliDateService, private readonly element: ElementRef) {
+    constructor(private readonly element: ElementRef) {
+        momentJalali.locale('fa', {useGregorianParser: true})
+        this.dateService = new JalaliDateService()
         this.loadData(moment())
         this.onColorChanges(this.primaryColor)
     }
 
     onPreviousMonthClick() {
-        this.loadData(this.dates[1][6].date.subtract(1, 'month'))
+        this.loadData(this.dates[1][6].gDate.subtract(1, 'month'))
     }
 
     onNextMonthClick() {
-        this.loadData(this.dates[1][6].date.add(1, 'month'))
+        this.loadData(this.dates[1][6].gDate.add(1, 'month'))
     }
 
     loadData(date: Moment) {
-        this.dates = this.jalaliDateService.daysInMonth(date.format('YYYY/MM/DD'))
-        this.currentYear = this.dates[1][6].jDate.format('YYYY')
-        this.currentMonth = this.dates[1][6].jDate.format('MMMM')
+        this.dates = this.dateService.daysInMonth(date.format('YYYY/MM/DD'))
+        this.currentYear = this.dates[1][6].date.format('YYYY')
+        this.currentMonth = this.dates[1][6].date.format('MMMM')
     }
 
     hexToRgb(hex: string): string {
@@ -58,6 +64,17 @@ export class DatepickerComponent {
         const date = moment(momentJalali(value, 'jYYYY/jMM/jDD').doAsGregorian().format('YYYY/MM/DD'))
         this.loadData(date);
         this.selectedDate = date.format('YYYY/MM/DD')
+    }
+
+    onCalendarTypeChange(type: string) {
+        this.calendarType = type
+        if (type === 'jalali') {
+            this.dateService = new JalaliDateService();
+            this.loadData(moment())
+        } else if (type === 'gregorian') {
+            this.dateService = new GregorianDateService();
+            this.loadData(moment())
+        }
     }
 
     onColorChanges(color: string) {
