@@ -1,12 +1,11 @@
 import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import * as moment from "moment";
 import {Moment} from "moment";
-import {GregorianDateService} from "../../../../angular-persian-datepicker/src/lib/service/gregorian-date-service";
-import {HijriDateService} from "../../../../angular-persian-datepicker/src/lib/service/hijri-date-service";
-import {DateServiceInterface} from "../../../../angular-persian-datepicker/src/lib/service/date-service-interface";
-import {JalaliDateService} from "../../../../angular-persian-datepicker/src/lib/service/jalali-date-service";
 import {hexToRgb} from "../../../../angular-persian-datepicker/src/lib/helper/color-helper";
 import {IDatasource} from "ngx-ui-scroll";
+import {DatepickerService} from "../../../../angular-persian-datepicker/src/lib/service/datepicker-service";
+import {CalendarDay} from "../../../../angular-persian-datepicker/src/lib/models/calendar-day";
+import {DatepickerFactory} from "../../../../angular-persian-datepicker/src/lib/datepicker/datepicker-factory";
 
 @Component({
   selector: 'app-datepicker',
@@ -16,48 +15,41 @@ import {IDatasource} from "ngx-ui-scroll";
 export class DatepickerComponent implements OnInit {
   @Input() darkMode: boolean = false
   @Input() primaryColor = '#38b0ac'
-  @Input() calendarType: 'jalali' | 'gregorian' | 'hijri' | string = 'jalali'
+  @Input() calendarType: 'jalali' | 'gregorian' | 'hijri' = 'jalali'
   @Input() format: any = 'YYYY/MM/DD';
 
   calendarMode: "date" | "month" | "year" = "date"
 
   selectedDate: any
-  dates!: any
-  currentYear!: any
-  currentMonth: any
-  dateService!: DateServiceInterface
-
-  range = (from: number, to: number, step: number) =>
-    [...Array(Math.floor((to - from) / step) + 1)].map((_, i) => from + i * step);
-
+  dates!: CalendarDay[][]
+  dateService!: DatepickerService
 
   constructor(private readonly element: ElementRef) {
-    this.dateService = new JalaliDateService()
-    this.loadData(moment())
+    this.loadCalendar(new Date())
     this.onColorChanges(this.primaryColor)
   }
 
   ngOnInit() {
     this.selectedDate = moment().format('YYYY/MM/DD')
-    this.scrollToIndex(Math.floor(parseInt(this.currentYear) / 4) - 2)
+    this.scrollToYear()
   }
 
   onPreviousMonthClick() {
-    this.loadData(this.dates[1][6].gDate.subtract(1, 'month'))
+    this.loadCalendar(this.dates[1][1].date.subtract(1, 'month'))
   }
 
   onNextMonthClick() {
-    this.loadData(this.dates[1][6].gDate.add(1, 'month'))
+    this.loadCalendar(this.dates[1][1].date.add(1, 'month'))
   }
 
-  loadData(date: Moment) {
-    this.dates = this.dateService.daysInMonth(date.format('YYYY/MM/DD'))
-    this.currentYear = this.dateService.getCurrentYear(this.dates[1][6].date)
-    this.currentMonth = this.dateService.getCurrentMonth(this.dates[1][6].date)
+  loadCalendar(date: Moment | Date) {
+    this.dateService = new DatepickerService(date, DatepickerFactory.create(this.calendarType))
+    this.dates = this.dateService.calendar()
+    this.scrollToYear()
   }
 
   onDateChange(value: string) {
-    this.loadData(moment(value))
+    this.loadCalendar(moment(value))
     this.selectedDate = moment(value).format(this.format)
   }
 
@@ -66,20 +58,9 @@ export class DatepickerComponent implements OnInit {
     this.selectedDate = moment(this.selectedDate).format(this.format)
   }
 
-  onCalendarTypeChange(type: string) {
+  onCalendarTypeChange(type: any) {
     this.calendarType = type
-    if (type === 'jalali') {
-      this.dateService = new JalaliDateService();
-      this.loadData(moment())
-    } else if (type === 'gregorian') {
-      this.dateService = new GregorianDateService();
-      this.loadData(moment())
-    } else if (type === 'hijri') {
-      this.dateService = new HijriDateService();
-      this.loadData(moment())
-    }
-
-    this.scrollToYear()
+    this.loadCalendar(moment())
   }
 
   onColorChanges(color: string) {
@@ -87,32 +68,27 @@ export class DatepickerComponent implements OnInit {
   }
 
   onGoToTodayClick() {
-    const now = moment()
-    this.loadData(now)
-    this.onDateChange(now.format('YYYY/MM/DD'))
+    this.loadCalendar(moment())
+    this.onDateChange(moment().format('YYYY/MM/DD'))
   }
 
   protected readonly moment = moment;
 
-  changeCurrentMonth(month: string) {
-    this.dates = this.dateService.loadDaysInMonthWithYearAndMonth(this.currentYear, month)
-    this.currentYear = this.dateService.getCurrentYear(this.dates[1][6].date)
-    this.currentMonth = this.dateService.getCurrentMonth(this.dates[1][6].date)
-    this.scrollToYear()
+  changeCurrentMonth(month: number) {
+    const date = this.dateService.parseLocalDate(this.dateService.currentYear, month, 15)
+    this.loadCalendar(date)
     this.calendarMode = 'date'
   }
 
 
   changeCurrentYear(year: number) {
-    this.dates = this.dateService.loadDaysInMonthWithYearAndMonth(year, this.currentMonth)
-    this.currentYear = this.dateService.getCurrentYear(this.dates[1][6].date)
-    this.currentMonth = this.dateService.getCurrentMonth(this.dates[1][6].date)
-    this.scrollToYear()
+    const date = this.dateService.parseLocalDate(year, this.dateService.currentMonth, 15)
+    this.loadCalendar(date)
     this.calendarMode = 'month'
   }
 
   scrollToYear() {
-    this.scrollToIndex(Math.floor(parseInt(this.currentYear) / 4) - 2)
+    this.scrollToIndex(Math.floor(this.dateService.currentYear / 4) - 2)
   }
 
   onMonthToggle() {
@@ -139,5 +115,9 @@ export class DatepickerComponent implements OnInit {
         startIndex: index,
       },
     };
+  }
+
+  range(from: number, to: number, step: number) {
+    return [...Array(Math.floor((to - from) / step) + 1)].map((_, i) => from + i * step);
   }
 }
