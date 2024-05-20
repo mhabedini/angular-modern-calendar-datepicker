@@ -7,7 +7,7 @@
       "projectType": "library",
       "root": "projects/angular-persian-datepicker",
       "sourceRoot": "projects/angular-persian-datepicker/src",
-      "prefix": "lib",
+      "prefix": "apd",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",

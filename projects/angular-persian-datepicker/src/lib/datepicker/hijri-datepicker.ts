@@ -1,8 +1,8 @@
 import {DatepickerConfig} from "../models/datepicker-config";
 import {DatepickerOptions} from "../models/datepicker-options";
-import * as momentHijri from 'moment-hijri'
+import momentHijri from 'moment-hijri'
 import {Moment} from "moment/moment";
-import * as moment from "moment/moment";
+import moment from "moment/moment";
 import {Datepicker} from "./datepicker";
 
 export class HijriDatepicker implements Datepicker {
