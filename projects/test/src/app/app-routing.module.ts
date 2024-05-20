@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {DatepickerComponent} from "./datepicker/datepicker.component";
+import {DatepickerTestComponent} from "./datepicker/datepicker-test.component";
 
 const routes: Routes = [{
   path: '',
-  component: DatepickerComponent
+  component: DatepickerTestComponent
 }];
 
 @NgModule({

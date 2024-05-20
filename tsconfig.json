@@ -2,6 +2,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "paths": {
       "angular-persian-datepicker": [
         "dist/angular-persian-datepicker"

@@ -1,7 +1,7 @@
 import {DatepickerConfig} from "../models/datepicker-config";
 import {DatepickerOptions} from "../models/datepicker-options";
-import * as momentJalali from "jalali-moment";
-import * as moment from "moment/moment";
+import momentJalali from "jalali-moment";
+import moment from "moment/moment";
 import {Datepicker} from "./datepicker";
 
 export class JalaliDatepicker implements Datepicker {

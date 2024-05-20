@@ -1,4 +1,4 @@
-import * as moment from "moment";
+import moment from "moment";
 import {Moment} from "moment";
 import {extendMoment} from "moment-range";
 import {DatepickerOptions} from "../models/datepicker-options";
