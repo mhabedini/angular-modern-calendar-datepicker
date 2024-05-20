@@ -27,7 +27,6 @@ export class DatepickerComponent implements OnInit {
 
     constructor(private readonly element: ElementRef) {
         this.loadCalendar(new Date())
-        console.log(this.dateService.config.weekends.includes(this.dates[2][2].weekDay))
     }
 
     ngOnInit() {
@@ -48,18 +47,14 @@ export class DatepickerComponent implements OnInit {
         this.scrollToYear()
     }
 
-    onDateChange(value: string) {
-        this.loadCalendar(moment(value))
-        this.selectedDate = moment(value).format('YYYY/MM/DD')
-    }
-
     onColorChanges(color: string) {
         this.element.nativeElement.style.setProperty('--color-primary', hexToRgb(color));
     }
 
     onGoToTodayClick() {
-        this.loadCalendar(moment())
-        this.onDateChange(moment().format('YYYY/MM/DD'))
+        const now = moment()
+        this.loadCalendar(now)
+        this.selectedDate = now.format('YYYY/MM/DD')
     }
 
     changeCurrentMonth(month: number) {
