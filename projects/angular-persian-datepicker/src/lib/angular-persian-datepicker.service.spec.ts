@@ -1,17 +1,15 @@
 import {TestBed} from '@angular/core/testing';
-import {HijriDateService} from "./service/hijri-date-service";
-import {DateServiceInterface} from "./service/date-service-interface";
+import {JalaliDatepicker} from "./datepicker/jalali-datepicker";
 
 describe('AngularPersianDatepickerService', () => {
-  let service: DateServiceInterface;
+  let service: JalaliDatepicker;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(HijriDateService);
+    service = TestBed.inject(JalaliDatepicker);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
-    expect(service.daysInMonth('1403/06/04')).toEqual(1)
   });
 });
