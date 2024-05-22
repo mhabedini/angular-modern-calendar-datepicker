@@ -1,6 +1,5 @@
-import {Component, ElementRef, Input, OnInit} from '@angular/core';
-import moment from "moment";
-import {Moment} from "moment";
+import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import moment, {Moment} from "moment";
 import {IDatasource} from "ngx-ui-scroll";
 import {CalendarDay} from "../../models/calendar-day";
 import {DatepickerService} from "../../service/datepicker-service";
@@ -11,15 +10,23 @@ import {hexToRgb} from "../../helper/color-helper";
     selector: 'apd-datepicker',
     templateUrl: './datepicker.component.html',
 })
-export class DatepickerComponent implements OnInit {
+export class DatepickerComponent implements OnInit, OnChanges {
     @Input() darkMode: boolean = false
     @Input() primaryColor = '#38b0ac'
     @Input() calendarType: 'jalali' | 'gregorian' | 'hijri' = 'jalali'
-    @Input() format: any = 'YYYY/MM/DD';
+    @Input() calendarMode: 'normal' | 'datepicker' | 'date-range-picker' = 'normal'
+
+    @Output() onDateSelect: EventEmitter<any> = new EventEmitter<any>()
+    @Output() onDateRangeSelect: EventEmitter<any> = new EventEmitter<any>()
+
+    selectedDate!: any
+
+    selectedStartDate!: any
+    selectedEndDate!: any
 
     datasource!: IDatasource
-    calendarMode: "date" | "month" | "year" = "date"
-    selectedDate: any
+    format: any = 'YYYY/MM/DD';
+    calendarSelectorMode: "date" | "month" | "year" = "date"
     dates!: CalendarDay[][]
     dateService!: DatepickerService
 
@@ -54,20 +61,19 @@ export class DatepickerComponent implements OnInit {
     onGoToTodayClick() {
         const now = moment()
         this.loadCalendar(now)
-        this.selectedDate = now.format('YYYY/MM/DD')
     }
 
     changeCurrentMonth(month: number) {
         const date = this.dateService.parseLocalDate(this.dateService.currentYear, month, 15)
         this.loadCalendar(date)
-        this.calendarMode = 'date'
+        this.calendarSelectorMode = 'date'
     }
 
 
     changeCurrentYear(year: number) {
         const date = this.dateService.parseLocalDate(year, this.dateService.currentMonth, 15)
         this.loadCalendar(date)
-        this.calendarMode = 'month'
+        this.calendarSelectorMode = 'month'
     }
 
     scrollToYear() {
@@ -75,11 +81,11 @@ export class DatepickerComponent implements OnInit {
     }
 
     onMonthToggle() {
-        this.calendarMode = this.calendarMode === 'month' ? 'date' : 'month'
+        this.calendarSelectorMode = this.calendarSelectorMode === 'month' ? 'date' : 'month'
     }
 
     onYearToggle() {
-        this.calendarMode = this.calendarMode === 'year' ? 'date' : 'year'
+        this.calendarSelectorMode = this.calendarSelectorMode === 'year' ? 'date' : 'year'
     }
 
     scrollToIndex(index: number) {
@@ -100,5 +106,58 @@ export class DatepickerComponent implements OnInit {
 
     range(from: number, to: number, step: number) {
         return [...Array(Math.floor((to - from) / step) + 1)].map((_, i) => from + i * step);
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['calendarType']) {
+            this.calendarType = changes['calendarType'].currentValue
+            this.loadCalendar(new Date())
+        }
+
+        if (changes['primaryColor']) {
+            this.onColorChanges(changes['primaryColor'].currentValue)
+        }
+
+        if (changes['calendarMode']) {
+            this.resetVariables()
+        }
+    }
+
+    onNewDateSelect(date: CalendarDay) {
+        if (this.calendarMode === 'date-range-picker' && this.selectedEndDate === undefined && this.selectedStartDate !== undefined && date.date.isBefore(this.selectedStartDate)) {
+            return;
+        }
+
+        if (!date.isForCurrentMonth) {
+            return;
+        }
+
+        if (this.calendarMode === 'normal') {
+            return;
+        }
+
+        const selectedDate = date.date
+
+        if (this.calendarMode === 'datepicker') {
+            this.selectedDate = selectedDate
+            this.onDateSelect.emit(selectedDate)
+            return;
+        }
+
+        if (this.calendarMode === 'date-range-picker') {
+            if (this.selectedStartDate === undefined || this.selectedEndDate !== undefined) {
+                this.selectedStartDate = selectedDate
+                this.selectedEndDate = undefined
+            } else {
+                this.selectedEndDate = selectedDate
+            }
+        }
+    }
+
+    private resetVariables() {
+        this.selectedEndDate = undefined
+        this.selectedStartDate = undefined
+        this.selectedDate = undefined
+
     }
 }
