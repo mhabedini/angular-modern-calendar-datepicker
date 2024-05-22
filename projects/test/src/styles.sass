@@ -5,6 +5,27 @@
 @tailwind components
 @tailwind utilities
 
+.date-picker__range-between
+  border: none !important
+  width: 3rem !important
+  border-radius: 0 !important
+  @apply bg-opacity-10 ps-2.5 ms-0 bg-primary text-primary #{!important}
+
+.datepicker__selected
+  @apply bg-primary text-white #{!important}
+
+.date-picker__weekend
+  @apply text-red-500 dark:text-red-400 #{!important}
+
+.datepicker__hover
+  @apply hover:text-primary hover:bg-primary
+
+.datepicker__today
+  @apply border border-primary text-primary #{!important}
+
+.datepicker__disable
+  @apply text-opacity-30 dark:text-opacity-40 cursor-default #{!important}
+
 \::-webkit-scrollbar
   width: 0.5rem
   height: 0.5rem
