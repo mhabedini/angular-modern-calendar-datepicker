@@ -150,6 +150,10 @@ export class DatepickerComponent implements OnInit, OnChanges {
                 this.selectedEndDate = undefined
             } else {
                 this.selectedEndDate = selectedDate
+                this.onDateRangeSelect.emit({
+                    startDate: this.selectedStartDate,
+                    endDate: this.selectedEndDate,
+                })
             }
         }
     }
@@ -158,6 +162,5 @@ export class DatepickerComponent implements OnInit, OnChanges {
         this.selectedEndDate = undefined
         this.selectedStartDate = undefined
         this.selectedDate = undefined
-
     }
 }

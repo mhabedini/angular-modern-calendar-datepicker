@@ -2,7 +2,7 @@
   [class.dark]="darkMode"
   [dir]="dateService.config.rtl ? 'rtl' : 'ltr'"
   [class.font-sans_en]="calendarType === 'gregorian'"
-  class="flex flex-col w-[22.5rem] m-10 border rounded-xl py-4 bg-white dark:bg-gray-800">
+  class="flex flex-col w-[22.5rem] border rounded-xl py-4 bg-white dark:bg-gray-800">
   <div class="flex flex-row justify-between items-center px-4">
     <a
       (click)="onPreviousMonthClick()"
@@ -14,7 +14,7 @@
       class="flex justify-center text-primary gap-2">
       <div
         (click)="onYearToggle()"
-        class="rounded-full bg-primary bg-opacity-10 px-4 py-2 cursor-pointer font-bold text-sm">
+        class="rounded-full bg-primary bg-opacity-10 dark:bg-opacity-20 px-4 py-2 cursor-pointer font-bold text-sm">
         {{dateService.currentYear}}
       </div>
 
