@@ -11,6 +11,9 @@
 
     </apd-datepicker>
     <div dir="auto" class="flex flex-col w-[22.5rem] md:my-10 justify-start">
+
+      <a class="bg-primary cursor-pointer text-white rounded-lg w-36 flex items-center justify-center px-4 py-2 mb-4">باز کردن تقویم</a>
+
         <div *ngIf="calendarMode === 'datepicker'"
              class="flex flex-col gap-2">
             <label class="text-sm">تاریخ خروجی</label>
@@ -20,7 +23,7 @@
         </div>
 
         <div *ngIf="calendarMode === 'date-range-picker'"
-             class="flex flex-col gap-2">
+             class="flex flex-col gap-2 mt-4">
             <label class="text-sm">تاریخ شروع انتخاب شده</label>
             <div class="text-primary">
                 {{selectedStartDate?.format(format) || 'انتخاب نشده'}}
@@ -28,7 +31,7 @@
         </div>
 
         <div *ngIf="calendarMode === 'date-range-picker'"
-             class="flex flex-col gap-2">
+             class="flex flex-col gap-2 mt-4">
             <label class="text-sm">تاریخ پایان انتخاب شده</label>
             <div class="text-primary">
                 {{selectedEndDate?.format(format) || 'انتخاب نشده'}}
@@ -47,14 +50,6 @@
             حالت تاریک
             <label class="text-sm switch">
                 <input [(ngModel)]="darkMode" type="checkbox">
-                <span class="slider round"></span>
-            </label>
-        </div>
-
-        <div class="mt-6 flex flex-col gap-2">
-            حالت راست به چپ
-            <label class="text-sm switch">
-                <!--                <input [(ngModel)]="dateService.config.rtl" type="checkbox">-->
                 <span class="slider round"></span>
             </label>
         </div>

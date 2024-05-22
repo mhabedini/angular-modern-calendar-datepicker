@@ -11,6 +11,7 @@ import {DateRange} from "../../models/date-range";
 @Component({
     selector: 'apd-datepicker',
     templateUrl: './datepicker.component.html',
+    styleUrls: ['./datepicker.component.sass'],
 })
 export class DatepickerComponent implements OnInit, OnChanges {
     @Input() darkMode: boolean = false
