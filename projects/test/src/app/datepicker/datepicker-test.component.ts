@@ -1,35 +1,51 @@
-import {Component} from '@angular/core';
-import * as moment from "moment";
-import {DatepickerService} from "../../../../angular-persian-datepicker/src/lib/service/datepicker-service";
+import {Component, ElementRef} from '@angular/core';
+import moment from "moment";
+import {hexToRgb} from "angular-persian-datepicker";
+
 
 @Component({
-    selector: 'app-datepicker',
-    templateUrl: './datepicker-test.component.html',
-    styleUrls: ['./datepicker-test.component.sass']
+  selector: 'app-datepicker',
+  templateUrl: './datepicker-test.component.html',
+  styleUrls: ['./datepicker-test.component.sass']
 })
 export class DatepickerTestComponent {
-    darkMode: boolean = false
-    primaryColor = '#38b0ac'
-    calendarType: 'jalali' | 'gregorian' | 'hijri' = 'jalali'
-    format: any = 'YYYY/MM/DD';
+  darkMode: boolean = false
+  public primaryColor = '#38b0ac'
+  public primaryColorChange = ''
 
-    selectedDate: any
-    dateService!: DatepickerService
+  calendarType: 'jalali' | 'gregorian' | 'hijri' = 'jalali'
+  calendarMode: 'normal' | 'datepicker' | 'date-range-picker' = 'normal'
 
-    onDateChange(value: string) {
-        this.selectedDate = moment(value).format(this.format)
-    }
+  format: any = 'YYYY/MM/DD';
 
-    onDateFormatChange(value: string) {
-        this.format = value
-        this.selectedDate = moment(this.selectedDate).format(this.format)
-    }
+  selectedDate: any
 
-    onColorChanges(color: string) {
-        this.primaryColor = color
-    }
+  constructor(private readonly element: ElementRef) {
+  }
 
-    onCalendarTypeChange(type: any) {
-        this.calendarType = type
-    }
+  onDateChange(value: string) {
+    this.selectedDate = moment(value).format(this.format)
+  }
+
+  onDateFormatChange(value: string) {
+    this.format = value
+    this.selectedDate = moment(this.selectedDate).format(this.format)
+  }
+
+  onColorChanges(color: string) {
+    this.primaryColor = color
+    this.element.nativeElement.style.setProperty('--color-primary', hexToRgb(color));
+  }
+
+  onCalendarTypeChange(type: any) {
+    this.calendarType = type
+  }
+
+  onCalendarModeChange(mode: any) {
+    this.calendarMode = mode
+  }
+
+  onDateSelect(date: moment.Moment) {
+    this.selectedDate = date.format(this.format)
+  }
 }

@@ -33,7 +33,7 @@
   </div>
 
   <div
-    *ngIf="calendarMode === 'date'"
+    *ngIf="calendarSelectorMode === 'date'"
     class="flex flex-col mt-4 px-4">
     <div class="flex flex-row gap-2 text-sm bg-primary text-white rounded-lg">
       <div
@@ -45,25 +45,35 @@
     <div class="flex flex-col mt-4 gap-4">
       <div
         *ngFor="let week of dates"
-        class="flex flex-row gap-2">
+        class="flex flex-row">
         <div
-          class="flex w-10 cursor-pointer h-10 p-1 font-medium text-black dark:text-white justify-center rounded"
+          class="flex w-10 ms-2 first:ms-0 cursor-pointer h-10 p-1 font-medium text-black dark:text-white justify-center rounded"
           [class.!text-red-500]="dateService.config.weekends?.includes(day.weekDay)"
           [class.dark:!text-red-400]="dateService.config.weekends?.includes(day.weekDay)"
-          [class.hover:text-primary]="day.isForCurrentMonth"
-          [class.hover:bg-primary]="day.isForCurrentMonth"
-          [class.hover:bg-opacity-10]="day.isForCurrentMonth"
+          [class.hover:text-primary]="calendarMode !== 'normal' && day.isForCurrentMonth && !(selectedEndDate === undefined && selectedStartDate !== undefined && day.date.isBefore(selectedStartDate))"
+          [class.hover:bg-primary]="calendarMode !== 'normal' && day.isForCurrentMonth && !(selectedEndDate === undefined && selectedStartDate !== undefined && day.date.isBefore(selectedStartDate))"
+          [class.hover:bg-opacity-10]="calendarMode !== 'normal' && day.isForCurrentMonth"
+          [class.!bg-opacity-10]="selectedEndDate !== undefined && day.date.isBetween(selectedStartDate, selectedEndDate)"
+          [class.!ms-0]="selectedEndDate !== undefined && day.date.isBetween(selectedStartDate, selectedEndDate) || selectedEndDate?.isSame(day.date)"
+          [class.!w-12]="selectedEndDate !== undefined && day.date.isBetween(selectedStartDate, selectedEndDate)"
+          [class.!ps-2]="selectedEndDate !== undefined && day.date.isBetween(selectedStartDate, selectedEndDate)"
+          [class.!rounded-none]="selectedEndDate !== undefined && day.date.isBetween(selectedStartDate, selectedEndDate)"
+          [class.!border-none]="selectedEndDate !== undefined && day.date.isBetween(selectedStartDate, selectedEndDate)"
+          [class.!w-14]="day.date.diff(selectedEndDate, 'day') === 1 && day.date.isBetween(selectedStartDate, selectedEndDate)"
           [class.dark:hover:bg-opacity-20]="day.isForCurrentMonth"
-          [class.!text-opacity-30]="!day.isForCurrentMonth"
-          [class.dark:!text-opacity-40]="!day.isForCurrentMonth"
-          [class.!cursor-default]="!day.isForCurrentMonth"
-          [class.text-primary]="day.isToday && day.isForCurrentMonth"
+          [class.!text-opacity-30]="!day.isForCurrentMonth || (selectedEndDate === undefined && selectedStartDate !== undefined && day.date.isBefore(selectedStartDate))"
+          [class.dark:!text-opacity-40]="!day.isForCurrentMonth || (selectedEndDate === undefined && selectedStartDate !== undefined && day.date.isBefore(selectedStartDate))"
+          [class.!cursor-default]="calendarMode === 'normal' || !day.isForCurrentMonth || (selectedEndDate === undefined && selectedStartDate !== undefined && day.date.isBefore(selectedStartDate))"
+          [class.!text-primary]="(day.isToday && day.isForCurrentMonth) || (selectedEndDate !== undefined && day.date.isBetween(selectedStartDate, selectedEndDate))"
           [class.!border]="day.isToday && day.isForCurrentMonth"
           [class.border-primary]="day.isToday && day.isForCurrentMonth"
-          [class.!bg-primary]="selectedDate?.includes(day.date.format(format)) && day.isForCurrentMonth"
-          [class.!text-white]="selectedDate?.includes(day.date.format(format)) && day.isForCurrentMonth"
-          [class.dark:!text-white]="selectedDate?.includes(day.date.format(format)) && day.isForCurrentMonth"
-          (click)="day.isForCurrentMonth ? selectedDate = day.date.format('YYYY/MM/DD'): null"
+          [class.!bg-primary]="(selectedDate?.isSame(day.date) && day.isForCurrentMonth)
+          || selectedStartDate?.isSame(day.date) || selectedEndDate?.isSame(day.date)
+          || (selectedEndDate !== undefined && day.date.isBetween(selectedStartDate, selectedEndDate))"
+          [class.!text-white]="(selectedDate?.isSame(day.date) && day.isForCurrentMonth)
+          || selectedStartDate?.isSame(day.date) || selectedEndDate?.isSame(day.date)"
+          [class.dark:!text-white]="selectedDate?.isSame(day.date) && day.isForCurrentMonth"
+          (click)="onNewDateSelect(day)"
           *ngFor="let day of week">
           <div
             [ngClass]="'items-center justify-center'"
@@ -74,7 +84,7 @@
       </div>
     </div>
   </div>
-  <div class=" px-4" *ngIf="calendarMode === 'month'">
+  <div class=" px-4" *ngIf="calendarSelectorMode === 'month'">
     <div class="grid grid-cols-3 grid-rows-4 mt-4 gap-2">
       <div class="w-full flex items-center justify-center hover:font-bold
          h-16 border rounded-lg cursor-pointer text-sm hover:border-none
@@ -88,7 +98,7 @@
     </div>
   </div>
 
-  <div class="ps-4 pe-2" *ngIf="calendarMode === 'year'">
+  <div class="ps-4 pe-2" *ngIf="calendarSelectorMode === 'year'">
     <div
       class="flex flex-col mt-4 gap-2 h-80 overflow-y-scroll">
       <div class="grid grid-cols-4 gap-2 mb-2" *uiScroll="let data of datasource">
