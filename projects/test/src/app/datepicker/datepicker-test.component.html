@@ -70,10 +70,8 @@
 
         <div class="mt-6 flex flex-col gap-2">
             <label class="text-sm">انتخاب نوع تقویم</label>
-            <select
-                #calendarTypeInput
-                (change)="onCalendarTypeChange(calendarTypeInput.value)"
-                class="!border !outline-none px-2 border-primary rounded !h-10">
+            <select [(ngModel)]="calendarType"
+                    class="!border !outline-none px-2 border-primary rounded !h-10">
                 <option value="jalali">هجری شمسی | جلالی</option>
                 <option value="hijri">هجری قمری</option>
                 <option value="gregorian">میلادی | Gregorian</option>
@@ -82,10 +80,8 @@
 
         <div class="mt-6 flex flex-col gap-2">
             <label class="text-sm">انتخاب حالت تقویم</label>
-            <select
-                #calendarModeInput
-                (change)="onCalendarModeChange(calendarModeInput.value)"
-                class="!border !outline-none px-2 border-primary rounded !h-10">
+            <select [(ngModel)]="calendarMode"
+                    class="!border !outline-none px-2 border-primary rounded !h-10">
                 <option value="normal">Normal</option>
                 <option value="datepicker">Datepicker</option>
                 <option value="date-range-picker">Date range picker</option>

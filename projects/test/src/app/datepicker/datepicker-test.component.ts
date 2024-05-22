@@ -1,6 +1,6 @@
 import {Component, ElementRef} from '@angular/core';
-import moment from "moment";
-import {hexToRgb} from "angular-persian-datepicker";
+import moment, {Moment} from "moment";
+import {DateRange, hexToRgb} from "angular-persian-datepicker";
 
 
 @Component({
@@ -13,13 +13,13 @@ export class DatepickerTestComponent {
   public primaryColor = '#1546c0'
 
   calendarType: 'jalali' | 'gregorian' | 'hijri' = 'jalali'
-  calendarMode: 'normal' | 'datepicker' | 'date-range-picker' = 'normal'
+  calendarMode: 'normal' | 'datepicker' | 'date-range-picker' = 'date-range-picker'
 
   format: any = 'YYYY/MM/DD';
 
   selectedDate: any
-  selectedStartDate: any
-  selectedEndDate: any
+  selectedStartDate!: Moment
+  selectedEndDate!: Moment
 
   constructor(private readonly element: ElementRef) {
     this.onColorChanges(this.primaryColor)
@@ -39,19 +39,11 @@ export class DatepickerTestComponent {
     this.element.nativeElement.style.setProperty('--color-primary', hexToRgb(color));
   }
 
-  onCalendarTypeChange(type: any) {
-    this.calendarType = type
-  }
-
-  onCalendarModeChange(mode: any) {
-    this.calendarMode = mode
-  }
-
-  onDateSelect(date: moment.Moment) {
+  onDateSelect(date: Moment) {
     this.selectedDate = date.format(this.format)
   }
 
-  onDateRangeSelect(data: any) {
+  onDateRangeSelect(data: DateRange) {
     this.selectedStartDate = data.startDate
     this.selectedEndDate = data.endDate
   }

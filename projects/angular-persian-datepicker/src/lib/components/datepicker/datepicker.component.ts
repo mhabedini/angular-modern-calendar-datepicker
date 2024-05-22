@@ -5,6 +5,8 @@ import {CalendarDay} from "../../models/calendar-day";
 import {DatepickerService} from "../../service/datepicker-service";
 import {DatepickerFactory} from "../../datepicker/datepicker-factory";
 import {hexToRgb} from "../../helper/color-helper";
+import {DateRange} from "../../models/date-range";
+
 
 @Component({
     selector: 'apd-datepicker',
@@ -16,8 +18,8 @@ export class DatepickerComponent implements OnInit, OnChanges {
     @Input() calendarType: 'jalali' | 'gregorian' | 'hijri' = 'jalali'
     @Input() calendarMode: 'normal' | 'datepicker' | 'date-range-picker' = 'normal'
 
-    @Output() onDateSelect: EventEmitter<any> = new EventEmitter<any>()
-    @Output() onDateRangeSelect: EventEmitter<any> = new EventEmitter<any>()
+    @Output() onDateSelect: EventEmitter<Moment> = new EventEmitter<Moment>()
+    @Output() onDateRangeSelect: EventEmitter<DateRange> = new EventEmitter<DateRange>()
 
     selectedDate!: any
 
@@ -152,8 +154,8 @@ export class DatepickerComponent implements OnInit, OnChanges {
                 this.selectedEndDate = selectedDate
                 this.onDateRangeSelect.emit({
                     startDate: this.selectedStartDate,
-                    endDate: this.selectedEndDate,
-                })
+                    endDate: this.selectedEndDate
+                });
             }
         }
     }
