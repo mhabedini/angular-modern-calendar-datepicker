@@ -5,26 +5,36 @@
 @tailwind components
 @tailwind utilities
 
-.date-picker__range-between
-  border: none !important
-  width: 3rem !important
-  border-radius: 0 !important
-  @apply bg-opacity-10 ps-2.5 ms-0 bg-primary text-primary #{!important}
+.datepicker-item
+  $p: &
 
-.datepicker__selected
-  @apply bg-primary text-white #{!important}
+  &__hovered:not(#{$p}__selected-date, #{$p}__disabled)
+    @apply hover:bg-primary hover:text-primary hover:bg-opacity-10
 
-.date-picker__weekend
-  @apply text-red-500 dark:text-red-400 #{!important}
+  &__today:not(#{$p}__active-range-between, #{$p}__selected-date)
+    @apply border border-primary text-primary dark:bg-primary dark:text-gray-400 dark:bg-opacity-20
 
-.datepicker__hover
-  @apply hover:text-primary hover:bg-primary
+  &__active-range-between
+    @apply bg-primary bg-opacity-10 dark:bg-opacity-40
+    @apply text-primary dark:text-white dark:text-opacity-60 #{!important}
 
-.datepicker__today
-  @apply border border-primary text-primary #{!important}
+  &__active-range-between-hovered
+    @apply border-y border-y-primary
 
-.datepicker__disable
-  @apply text-opacity-30 dark:text-opacity-40 cursor-default #{!important}
+    #{$p}__today
+      @apply border-none #{!important}
+
+  &__selected-date
+    @apply bg-primary
+    @apply text-white #{!important}
+
+  &__disabled
+    @apply text-black text-opacity-30 dark:text-white dark:text-opacity-30 #{!important}
+    @apply cursor-default
+
+  &__weekend
+    @apply text-red-600
+
 
 \::-webkit-scrollbar
   width: 0.5rem
