@@ -6,3 +6,9 @@ export function hexToRgb(hex: string): string {
   const b = bigint & 255;
   return `${r} ${g} ${b}`;
 }
+
+
+export function randomStr(prefix: string, radix: number = 36)
+{
+  return Math.random().toString(radix).replace('0.',prefix || '');
+}
