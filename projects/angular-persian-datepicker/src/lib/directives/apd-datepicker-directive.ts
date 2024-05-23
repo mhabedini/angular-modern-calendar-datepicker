@@ -12,6 +12,8 @@ import {DatepickerPopupComponent} from "../components/datepicker-popup/datepicke
 import {randomStr} from "../helper/color-helper";
 import {DateRange} from "../models/date-range";
 import {Moment} from "moment";
+import {CalendarType} from "../models/calendar-type";
+import {CalendarMode} from "../models/calendar-mode";
 
 @Directive({selector: '[adp-datepicker]'})
 export class ApdDatepickerDirective {
@@ -19,8 +21,8 @@ export class ApdDatepickerDirective {
     host!: any
     id!: string
 
-    @Input() calendarType: any
-    @Input() calendarMode: any
+    @Input() calendarType: CalendarType = CalendarType.JALALI
+    @Input() calendarMode: CalendarMode = CalendarMode.DATEPICKER
     @Input() darkMode: boolean = false
     @Input() primaryColor = '#38b0ac'
 

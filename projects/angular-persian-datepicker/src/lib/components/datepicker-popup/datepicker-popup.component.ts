@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Moment} from "moment";
 import {DateRange} from "../../models/date-range";
+import {CalendarType} from "../../models/calendar-type";
+import {CalendarMode} from "../../models/calendar-mode";
 
 @Component({
   selector: 'apd-datepicker-popup',
@@ -15,8 +17,8 @@ export class DatepickerPopupComponent {
   @Input() darkMode: boolean = false
   @Input() primaryColor = '#38b0ac'
 
-  @Input() calendarType: 'jalali' | 'gregorian' | 'hijri' = 'jalali'
-  @Input() calendarMode: 'normal' | 'datepicker' | 'date-range-picker' = 'datepicker'
+  @Input() calendarType: CalendarType = CalendarType.JALALI
+  @Input() calendarMode: CalendarMode = CalendarMode.DATEPICKER
 
   @Output() onDateSelect: EventEmitter<Moment> = new EventEmitter<Moment>()
   @Output() onDateRangeSelect: EventEmitter<DateRange> = new EventEmitter<DateRange>()
