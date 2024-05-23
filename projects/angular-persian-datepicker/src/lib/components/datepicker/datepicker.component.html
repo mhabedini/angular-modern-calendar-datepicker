@@ -2,7 +2,7 @@
   [class.dark]="darkMode"
   [dir]="dateService.config.rtl ? 'rtl' : 'ltr'"
   [class.font-sans_en]="calendarType === CalendarType.GREGORIAN"
-  class="flex flex-col w-[22.5rem] border rounded-xl py-4 bg-white dark:bg-gray-800">
+  class="flex flex-col min-w-[20rem] border rounded-xl py-4 bg-white dark:bg-gray-800">
   <div class="flex flex-row justify-between items-center px-4">
     <a
       (click)="onPreviousMonthClick()"
@@ -11,6 +11,7 @@
       {{dateService.options.translate.previousMonth}}
     </a>
     <div
+      [class.flex-row-reverse]="dateService.config.rtl"
       class="flex justify-center text-primary gap-2">
       <div
         (click)="onYearToggle()"
@@ -35,26 +36,26 @@
   <div
     *ngIf="calendarSelectorMode === 'date'"
     class="flex flex-col mt-4 px-4">
-    <div class="flex flex-row gap-2 text-sm bg-primary dark:bg-white dark:text-primary dark:font-bold dark:bg-opacity-60 text-white rounded-lg">
+    <div class="flex grid-cols-7 flex-row gap-2 text-sm bg-primary dark:bg-white dark:text-primary dark:font-bold dark:bg-opacity-60 text-white rounded-lg">
       <div
         [class.text-xs]="calendarType === CalendarType.HIJRI"
-        class="flex w-10 h-10 items-center justify-center"
+        class="flex w-full h-10 items-center justify-center"
         *ngFor="let day of dateService.weekdaysShort">{{day}}</div>
     </div>
 
     <div class="flex flex-col mt-4 gap-4">
       <div
         *ngFor="let week of dates"
-        class="flex flex-row">
+        class="grid grid-cols-7">
         <div
           (mouseover)="hoveredDay = day.date"
           (mouseleave)="hoveredDay = null"
           [class.datepicker-item__active-range-between]="selectedStartDate && selectedEndDate && day.date.isBetween(selectedStartDate, selectedEndDate)"
           [class.datepicker-item__active-range-between-hovered]="!selectedEndDate && selectedStartDate && hoveredDay && day.date.isBetween(selectedStartDate, hoveredDay)"
-          class="flex w-12 h-10 font-medium text-black dark:text-white justify-center datepicker-item"
+          class="flex h-10 w-full font-medium text-black dark:text-white justify-center datepicker-item"
           *ngFor="let day of week">
           <div
-            class="flex flex-col items-center justify-center leading-4 w-10 rounded"
+            class="flex flex-col items-center justify-center leading-4 mx-1 w-full rounded"
             [class.cursor-pointer]="calendarMode !== CalendarMode.NORMAL"
             [class.datepicker-item__weekend]="!(selectedStartDate && selectedEndDate && (day.date.isSame(selectedStartDate) || day.date.isSame(selectedEndDate))) && dateService.config.weekends.includes(day.weekDay)"
             [class.datepicker-item__selected-date]="day.date.isSame(selectedStartDate) || day.date.isSame(selectedEndDate) || day.date.isSame(selectedDate)"
