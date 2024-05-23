@@ -6,6 +6,8 @@ import {DatepickerService} from "../../service/datepicker-service";
 import {DatepickerFactory} from "../../datepicker/datepicker-factory";
 import {hexToRgb} from "../../helper/color-helper";
 import {DateRange} from "../../models/date-range";
+import {CalendarType} from "../../models/calendar-type";
+import {CalendarMode} from "../../models/calendar-mode";
 
 
 @Component({
@@ -16,8 +18,8 @@ import {DateRange} from "../../models/date-range";
 export class DatepickerComponent implements OnInit, OnChanges {
     @Input() darkMode: boolean = false
     @Input() primaryColor = '#38b0ac'
-    @Input() calendarType: 'jalali' | 'gregorian' | 'hijri' = 'jalali'
-    @Input() calendarMode: 'normal' | 'datepicker' | 'date-range-picker' = 'normal'
+    @Input() calendarType: CalendarType = CalendarType.JALALI
+    @Input() calendarMode: CalendarMode = CalendarMode.DATEPICKER
 
     @Output() onDateSelect: EventEmitter<Moment> = new EventEmitter<Moment>()
     @Output() onDateRangeSelect: EventEmitter<DateRange> = new EventEmitter<DateRange>()
@@ -166,4 +168,6 @@ export class DatepickerComponent implements OnInit, OnChanges {
         this.selectedStartDate = undefined
         this.selectedDate = undefined
     }
+
+    protected readonly CalendarType = CalendarType;
 }

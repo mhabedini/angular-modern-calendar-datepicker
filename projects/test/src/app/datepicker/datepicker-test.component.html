@@ -1,86 +1,94 @@
-<div class="flex flex-col md:flex-row gap-8 items-center justify-center md:items-start overflow-x-hidden">
-    <apd-datepicker
-            class="mt-10"
+<div class="grid grid-cols-1 md:grid-cols-5 items-center justify-center md:items-start">
+  <div class="flex flex-col w-[22.5rem] md:my-10 justify-start md:ms-8 mt-8">
+    <div *ngIf="calendarMode === 'datepicker'"
+         class="flex flex-col gap-2">
+      <label class="text-sm font-bold">تاریخ خروجی</label>
+      <div class="text-primary">
+        {{selectedDate || 'انتخاب نشده'}}
+      </div>
+    </div>
+
+    <div *ngIf="calendarMode === 'date-range-picker'"
+         class="flex flex-col gap-2 mt-2">
+      <label class="text-sm font-bold">تاریخ شروع انتخاب شده</label>
+      <div class="text-primary">
+        {{selectedStartDate?.format(format) || 'انتخاب نشده'}}
+      </div>
+    </div>
+
+    <div *ngIf="calendarMode === 'date-range-picker'"
+         class="flex flex-col gap-2 mt-4">
+      <label class="text-sm font-bold">تاریخ پایان انتخاب شده</label>
+      <div class="text-primary">
+        {{selectedEndDate?.format(format) || 'انتخاب نشده'}}
+      </div>
+    </div>
+
+    <div class="mt-6 flex flex-col gap-2">
+      <label class="text-sm font-bold">فرمت تاریخ (بعد از تغییر enter را بزنید)</label>
+      <input [ngModel]="format"
+             class="!border !outline-none px-2 border-primary rounded !h-10"
+             #inputFormat
+             (keydown.enter)="onDateFormatChange(inputFormat.value)">
+    </div>
+
+    <div class="mt-6 flex flex-col gap-2">
+      حالت تاریک
+      <label class="text-sm switch">
+        <input [(ngModel)]="darkMode" type="checkbox">
+        <span class="slider round"></span>
+      </label>
+    </div>
+
+    <div class="mt-6 flex flex-col gap-2">
+      <label class="text-sm font-bold">انتخاب رنگ</label>
+      <input
+        (colorPickerChange)="onColorChanges($event)"
+        [(ngModel)]="primaryColor"
+        class="!border !outline-none px-2 border-primary rounded !h-10"
+        [(colorPicker)]="primaryColor"/>
+    </div>
+
+    <div class="mt-6 flex flex-col gap-2">
+      <label class="text-sm font-bold">انتخاب نوع تقویم</label>
+      <select [(ngModel)]="calendarType"
+              class="!border !outline-none px-2 border-primary rounded !h-10">
+        <option value="jalali">هجری شمسی | جلالی</option>
+        <option value="hijri">هجری قمری</option>
+        <option value="gregorian">میلادی | Gregorian</option>
+      </select>
+    </div>
+
+    <div class="mt-6 flex flex-col gap-2">
+      <label class="text-sm font-bold">انتخاب حالت تقویم</label>
+      <select [(ngModel)]="calendarMode"
+              class="!border !outline-none px-2 border-primary rounded !h-10">
+        <option value="normal">Normal</option>
+        <option value="datepicker">Datepicker</option>
+        <option value="date-range-picker">Date range picker</option>
+      </select>
+    </div>
+  </div>
+  <apd-datepicker
+          class="mt-10 ms-8"
+          [calendarType]="calendarType"
+          [darkMode]="darkMode"
+          [primaryColor]="primaryColor"
+          [calendarMode]="calendarMode"
+          (onDateSelect)="onDateSelect($event)"
+          (onDateRangeSelect)="onDateRangeSelect($event)"
+  >
+  </apd-datepicker>
+  <div class="mt-2 w-full p-8">
+    <label class="text-sm font-bold">تقویم popup</label>
+    <input
+            adp-datepicker
             [calendarType]="calendarType"
-            [darkMode]="darkMode"
-            [primaryColor]="primaryColor"
             [calendarMode]="calendarMode"
+            [primaryColor]="primaryColor"
+            [darkMode]="darkMode"
             (onDateSelect)="onDateSelect($event)"
             (onDateRangeSelect)="onDateRangeSelect($event)"
-    >
-
-    </apd-datepicker>
-    <div dir="auto" class="flex flex-col w-[22.5rem] md:my-10 justify-start">
-
-      <a class="bg-primary cursor-pointer text-white rounded-lg w-36 flex items-center justify-center px-4 py-2 mb-4">باز کردن تقویم</a>
-
-        <div *ngIf="calendarMode === 'datepicker'"
-             class="flex flex-col gap-2">
-            <label class="text-sm">تاریخ خروجی</label>
-            <div class="text-primary">
-                {{selectedDate || 'انتخاب نشده'}}
-            </div>
-        </div>
-
-        <div *ngIf="calendarMode === 'date-range-picker'"
-             class="flex flex-col gap-2 mt-4">
-            <label class="text-sm">تاریخ شروع انتخاب شده</label>
-            <div class="text-primary">
-                {{selectedStartDate?.format(format) || 'انتخاب نشده'}}
-            </div>
-        </div>
-
-        <div *ngIf="calendarMode === 'date-range-picker'"
-             class="flex flex-col gap-2 mt-4">
-            <label class="text-sm">تاریخ پایان انتخاب شده</label>
-            <div class="text-primary">
-                {{selectedEndDate?.format(format) || 'انتخاب نشده'}}
-            </div>
-        </div>
-
-        <div class="mt-6 flex flex-col gap-2">
-            <label class="text-sm">فرمت تاریخ (بعد از تغییر enter را بزنید)</label>
-            <input [ngModel]="format"
-                   class="!border !outline-none px-2 border-primary rounded !h-10"
-                   #inputFormat
-                   (keydown.enter)="onDateFormatChange(inputFormat.value)">
-        </div>
-
-        <div class="mt-6 flex flex-col gap-2">
-            حالت تاریک
-            <label class="text-sm switch">
-                <input [(ngModel)]="darkMode" type="checkbox">
-                <span class="slider round"></span>
-            </label>
-        </div>
-
-        <div class="mt-6 flex flex-col gap-2">
-            <label class="text-sm">انتخاب رنگ</label>
-            <input
-                    (colorPickerChange)="onColorChanges($event)"
-                    [(ngModel)]="primaryColor"
-                    class="!border !outline-none px-2 border-primary rounded !h-10"
-                    [(colorPicker)]="primaryColor"/>
-        </div>
-
-        <div class="mt-6 flex flex-col gap-2">
-            <label class="text-sm">انتخاب نوع تقویم</label>
-            <select [(ngModel)]="calendarType"
-                    class="!border !outline-none px-2 border-primary rounded !h-10">
-                <option value="jalali">هجری شمسی | جلالی</option>
-                <option value="hijri">هجری قمری</option>
-                <option value="gregorian">میلادی | Gregorian</option>
-            </select>
-        </div>
-
-        <div class="mt-6 flex flex-col gap-2">
-            <label class="text-sm">انتخاب حالت تقویم</label>
-            <select [(ngModel)]="calendarMode"
-                    class="!border !outline-none px-2 border-primary rounded !h-10">
-                <option value="normal">Normal</option>
-                <option value="datepicker">Datepicker</option>
-                <option value="date-range-picker">Date range picker</option>
-            </select>
-        </div>
-    </div>
+            class="!border !outline-none px-2 border-primary rounded mt-2 !h-10 w-full" />
+  </div>
 </div>

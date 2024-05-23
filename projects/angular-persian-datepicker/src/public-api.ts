@@ -6,6 +6,10 @@ import {hexToRgb} from "./lib/helper/color-helper";
 
 export * from './lib/components/datepicker/datepicker.component';
 export * from './lib/components/datepicker/datepicker.module';
+export * from './lib/components/datepicker-popup/datepicker-popup.component';
+export * from './lib/components/datepicker-popup/datepicker-popup.module';
+export * from './lib/directives/apd-datepicker-directive';
+export * from './lib/directives/dpd-datepicker-directive.module';
 export * from './lib/datepicker/datepicker'
 export * from './lib/datepicker/gregorian-datepicker'
 export * from './lib/datepicker/hijri-datepicker'

@@ -1,6 +1,8 @@
 import {Component, ElementRef} from '@angular/core';
 import moment, {Moment} from "moment";
 import {DateRange, hexToRgb} from "angular-persian-datepicker";
+import {CalendarType} from "../../../../angular-persian-datepicker/src/lib/models/calendar-type";
+import {CalendarMode} from "../../../../angular-persian-datepicker/src/lib/models/calendar-mode";
 
 
 @Component({
@@ -12,8 +14,8 @@ export class DatepickerTestComponent {
   darkMode: boolean = false
   public primaryColor = '#1546c0'
 
-  calendarType: 'jalali' | 'gregorian' | 'hijri' = 'jalali'
-  calendarMode: 'normal' | 'datepicker' | 'date-range-picker' = 'date-range-picker'
+  calendarType: CalendarType = CalendarType.JALALI
+  calendarMode: CalendarMode = CalendarMode.DATEPICKER
 
   format: any = 'YYYY/MM/DD';
 
