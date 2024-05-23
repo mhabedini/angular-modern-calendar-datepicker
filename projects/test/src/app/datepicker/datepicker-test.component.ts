@@ -11,7 +11,7 @@ import {CalendarMode} from "../../../../angular-persian-datepicker/src/lib/model
   styleUrls: ['./datepicker-test.component.sass']
 })
 export class DatepickerTestComponent {
-  darkMode: boolean = false
+  darkMode: boolean = true
   public primaryColor = '#1546c0'
 
   calendarType: CalendarType = CalendarType.JALALI

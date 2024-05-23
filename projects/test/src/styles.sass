@@ -11,12 +11,12 @@
   &__hovered:not(#{$p}__selected-date, #{$p}__disabled)
     @apply hover:bg-primary hover:text-primary hover:bg-opacity-10
 
-  &__today:not(#{$p}__active-range-between)
-    @apply border border-primary text-primary
+  &__today:not(#{$p}__active-range-between, #{$p}__selected-date)
+    @apply border border-primary text-primary dark:bg-primary dark:text-gray-400 dark:bg-opacity-20
 
   &__active-range-between
-    @apply bg-primary bg-opacity-10
-    @apply text-primary #{!important}
+    @apply bg-primary bg-opacity-10 dark:bg-opacity-40
+    @apply text-primary dark:text-white dark:text-opacity-60 #{!important}
 
   &__active-range-between-hovered
     @apply border-y border-y-primary
@@ -29,7 +29,7 @@
     @apply text-white #{!important}
 
   &__disabled
-    @apply text-black text-opacity-30 #{!important}
+    @apply text-black text-opacity-30 dark:text-white dark:text-opacity-30 #{!important}
     @apply cursor-default
 
   &__weekend

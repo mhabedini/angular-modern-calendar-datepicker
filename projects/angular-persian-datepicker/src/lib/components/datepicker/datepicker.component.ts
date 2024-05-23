@@ -12,7 +12,7 @@ import {CalendarMode} from "../../models/calendar-mode";
 
 @Component({
   selector: 'apd-datepicker',
-  templateUrl: './datepicker.component1.html',
+  templateUrl: './datepicker.component.html',
   styleUrls: ['./datepicker.component.sass'],
 })
 export class DatepickerComponent implements OnInit, OnChanges {
@@ -168,4 +168,5 @@ export class DatepickerComponent implements OnInit, OnChanges {
   }
 
   protected readonly CalendarType = CalendarType;
+  protected readonly CalendarMode = CalendarMode;
 }

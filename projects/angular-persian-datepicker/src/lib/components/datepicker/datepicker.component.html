@@ -14,13 +14,13 @@
       class="flex justify-center text-primary gap-2">
       <div
         (click)="onYearToggle()"
-        class="rounded-full bg-primary bg-opacity-10 dark:bg-opacity-20 px-4 py-2 cursor-pointer font-bold text-sm">
+        class="rounded-full bg-primary bg-opacity-10 px-4 dark:bg-white dark:bg-opacity-60 py-2 cursor-pointer font-bold text-sm">
         {{dateService.currentYear}}
       </div>
 
       <div
         (click)="onMonthToggle()"
-        class="rounded-full bg-primary leading-4 bg-opacity-10 px-4 py-2 cursor-pointer font-bold text-sm">
+        class="rounded-full bg-primary leading-4 bg-opacity-10 px-4 py-2 dark:bg-white dark:bg-opacity-60 cursor-pointer font-bold text-sm">
         {{dateService.currentMonthName}}
       </div>
     </div>
@@ -35,7 +35,7 @@
   <div
     *ngIf="calendarSelectorMode === 'date'"
     class="flex flex-col mt-4 px-4">
-    <div class="flex flex-row gap-2 text-sm bg-primary text-white rounded-lg">
+    <div class="flex flex-row gap-2 text-sm bg-primary dark:bg-white dark:text-primary dark:font-bold dark:bg-opacity-60 text-white rounded-lg">
       <div
         [class.text-xs]="calendarType === CalendarType.HIJRI"
         class="flex w-10 h-10 items-center justify-center"
@@ -47,34 +47,22 @@
         *ngFor="let week of dates"
         class="flex flex-row">
         <div
-          (mouseover)="hoveredDay = day"
+          (mouseover)="hoveredDay = day.date"
           (mouseleave)="hoveredDay = null"
-          class="flex w-10 ms-2 first:ms-0 cursor-pointer h-10 p-1 font-medium text-black dark:text-white justify-center rounded"
-          [class.date-picker__weekend]="dateService.config.weekends?.includes(day.weekDay)"
-          [class.datepicker__hover]="calendarMode !== 'normal' && day.isForCurrentMonth && !(selectedEndDate === undefined && selectedStartDate !== undefined && day.date.isBefore(selectedStartDate))"
-          [class.hover:bg-opacity-10]="calendarMode !== 'normal' && day.isForCurrentMonth"
-          [class.date-picker__range-between]="selectedEndDate !== undefined && day.date.isBetween(selectedStartDate, selectedEndDate)"
-          [class.!ms-0]="selectedEndDate?.isSame(day.date)
-          && !(day.date.diff(selectedEndDate, 'day') === 0 && day.date.diff(selectedStartDate, 'day') === 0)"
-          [class.!w-16]="selectedEndDate?.diff(day.date, 'day') === 1 && day.date.isBetween(selectedStartDate, selectedEndDate)"
-          [class.!w-11]="(day.date.isSame(selectedEndDate) && selectedEndDate?.diff(selectedStartDate, 'day') === 1)
-          || (day.date.isSame(selectedStartDate) && selectedEndDate?.diff(selectedStartDate, 'day') === 1)"
-          [class.dark:hover:bg-opacity-20]="day.isForCurrentMonth"
-          [class.rounded-s-none]="day.date.isSame(selectedEndDate) && selectedEndDate?.diff(selectedStartDate, 'day') === 1"
-          [class.rounded-e-none]="day.date.isSame(selectedStartDate) && selectedEndDate?.diff(selectedStartDate, 'day') === 1"
-          [class.datepicker__disable]="!day.isForCurrentMonth"
-          [class.!cursor-default]="calendarMode === 'normal'"
-          [class.datepicker__today]="(day.isToday && day.isForCurrentMonth) && !(selectedEndDate === undefined && selectedStartDate !== undefined && day.date.isBefore(hoveredDay?.date) && day.date.isAfter(selectedStartDate))"
-          [class.datepicker__selected]="(selectedDate?.isSame(day.date) && day.isForCurrentMonth)
-          || selectedStartDate?.isSame(day.date) || selectedEndDate?.isSame(day.date)"
-          [class.dark:!text-white]="selectedDate?.isSame(day.date) && day.isForCurrentMonth"
-          [class.date-picker__hovered-in-between]="selectedEndDate === undefined && selectedStartDate !== undefined && day.date.isBefore(hoveredDay?.date) && day.date.isAfter(selectedStartDate)"
-          (click)="onNewDateSelect(day)"
+          [class.datepicker-item__active-range-between]="selectedStartDate && selectedEndDate && day.date.isBetween(selectedStartDate, selectedEndDate)"
+          [class.datepicker-item__active-range-between-hovered]="!selectedEndDate && selectedStartDate && hoveredDay && day.date.isBetween(selectedStartDate, hoveredDay)"
+          class="flex w-12 h-10 font-medium text-black dark:text-white justify-center datepicker-item"
           *ngFor="let day of week">
           <div
-            [ngClass]="'items-center justify-center'"
-            class="flex flex-col w-full">
-            <div class="flex flex-row justify-center leading-4">{{day.day}}</div>
+            class="flex flex-col items-center justify-center leading-4 w-10 rounded"
+            [class.cursor-pointer]="calendarMode !== CalendarMode.NORMAL"
+            [class.datepicker-item__weekend]="!(selectedStartDate && selectedEndDate && (day.date.isSame(selectedStartDate) || day.date.isSame(selectedEndDate))) && dateService.config.weekends.includes(day.weekDay)"
+            [class.datepicker-item__selected-date]="day.date.isSame(selectedStartDate) || day.date.isSame(selectedEndDate) || day.date.isSame(selectedDate)"
+            [class.datepicker-item__hovered]="calendarMode !== CalendarMode.NORMAL && !(selectedStartDate && selectedEndDate && (day.date.isSame(selectedStartDate) || day.date.isSame(selectedEndDate))) && !(selectedStartDate && selectedEndDate && day.date.isBetween(selectedStartDate, selectedEndDate))"
+            [class.datepicker-item__today]="day.isToday && !(selectedStartDate && selectedEndDate && day.date.isBetween(selectedStartDate, selectedEndDate))"
+            [class.datepicker-item__disabled]="!day.isForCurrentMonth"
+            (click)="onNewDateSelect(day)">
+            {{day.day}}
           </div>
         </div>
       </div>
@@ -113,7 +101,7 @@
 
   <div class="mt-3 px-4">
     <a (click)="onGoToTodayClick()"
-       class="h-10 bg-primary bg-opacity-10 font-bold dark:bg-opacity-20 rounded-lg text-primary text-sm flex items-center justify-center cursor-pointer">
+       class="h-10 bg-primary bg-opacity-10 font-bold dark:bg-white dark:bg-opacity-60 rounded-lg text-primary text-sm flex items-center justify-center cursor-pointer">
       {{dateService.options.translate.goToToday}}
     </a>
   </div>
