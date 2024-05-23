@@ -15,7 +15,7 @@ export class DatepickerTestComponent {
   public primaryColor = '#1546c0'
 
   calendarType: CalendarType = CalendarType.JALALI
-  calendarMode: CalendarMode = CalendarMode.DATEPICKER
+  calendarMode: CalendarMode = CalendarMode.DATE_RANGE_PICKER
 
   format: any = 'YYYY/MM/DD';
 
