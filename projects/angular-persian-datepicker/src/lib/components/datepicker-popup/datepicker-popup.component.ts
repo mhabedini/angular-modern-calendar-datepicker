@@ -11,6 +11,7 @@ import {CalendarMode} from "../../models/calendar-mode";
 })
 export class DatepickerPopupComponent {
   @Input() top!: number
+  @Input() bottom!: number
   @Input() left!: number
   @Input() right!: number
   @Input() id!: number

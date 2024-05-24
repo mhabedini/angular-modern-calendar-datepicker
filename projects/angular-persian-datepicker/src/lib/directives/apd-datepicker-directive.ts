@@ -48,7 +48,6 @@ export class ApdDatepickerDirective {
         this.id = randomStr('adp-datepicker-popup-')
         this.componentRef = this.viewContainerRef.createComponent(DatepickerPopupComponent);
         const rect = this.host.getBoundingClientRect();
-        this.componentRef.setInput('top', rect.bottom + 4)
         this.componentRef.setInput('id', this.id)
 
         if (this.calendarType) {
@@ -78,7 +77,17 @@ export class ApdDatepickerDirective {
             this.removeDatepicker()
         });
 
-        if (document.dir === 'rtl') {
+      if (window.innerHeight < rect.bottom + 510) {
+        console.log(rect.top)
+        this.componentRef.setInput('bottom', window.innerHeight - rect.top + 4)
+        this.componentRef.setInput('top', 'unset')
+      } else {
+        this.componentRef.setInput('top', rect.bottom + 4);
+        this.componentRef.setInput('bottom', 'unset');
+      }
+
+
+      if (document.dir === 'rtl') {
             this.componentRef.setInput('right', rect.left);
             this.componentRef.setInput('left', 'unset');
         } else {
