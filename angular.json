@@ -3,23 +3,23 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-persian-datepicker": {
+    "angular-modern-calendar-datepicker": {
       "projectType": "library",
-      "root": "projects/angular-persian-datepicker",
-      "sourceRoot": "projects/angular-persian-datepicker/src",
+      "root": "projects/angular-modern-calendar-datepicker",
+      "sourceRoot": "projects/angular-modern-calendar-datepicker/src",
       "prefix": "apd",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/angular-persian-datepicker/ng-package.json"
+            "project": "projects/angular-modern-calendar-datepicker/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/angular-persian-datepicker/tsconfig.lib.prod.json"
+              "tsConfig": "projects/angular-modern-calendar-datepicker/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/angular-persian-datepicker/tsconfig.lib.json"
+              "tsConfig": "projects/angular-modern-calendar-datepicker/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -27,7 +27,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "tsConfig": "projects/angular-persian-datepicker/tsconfig.spec.json",
+            "tsConfig": "projects/angular-modern-calendar-datepicker/tsconfig.spec.json",
             "polyfills": [
               "zone.js",
               "zone.js/testing"

@@ -1,5 +1,5 @@
 /*
- * Public API Surface of angular-persian-datepicker
+ * Public API Surface of angular-modern-calendar-datepicker
  */
 
 import {hexToRgb} from "./lib/helper/color-helper";
