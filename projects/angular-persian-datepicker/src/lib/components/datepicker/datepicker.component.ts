@@ -20,6 +20,7 @@ export class DatepickerComponent implements OnInit, OnChanges {
   @Input() primaryColor = '#38b0ac'
   @Input() calendarType: CalendarType = CalendarType.JALALI
   @Input() calendarMode: CalendarMode = CalendarMode.DATEPICKER
+  @Input() containerStyle!: string
 
   @Output() onDateSelect: EventEmitter<Moment> = new EventEmitter<Moment>()
   @Output() onDateRangeSelect: EventEmitter<DateRange> = new EventEmitter<DateRange>()
