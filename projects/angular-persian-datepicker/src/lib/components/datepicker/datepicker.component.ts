@@ -13,7 +13,7 @@ import {CalendarMode} from "../../models/calendar-mode";
 @Component({
   selector: 'apd-datepicker',
   templateUrl: './datepicker.component.html',
-  styleUrls: ['./datepicker.component.sass', '../../../../styles.css', '../../assets/sass/sansxfanum.sass'],
+  styleUrls: ['./datepicker.component.sass', '../../../../styles.css',],
 })
 export class DatepickerComponent implements OnInit, OnChanges {
   @Input() darkMode: boolean = false

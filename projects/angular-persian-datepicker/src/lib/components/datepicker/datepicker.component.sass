@@ -67,9 +67,9 @@
       @apply border border-primary text-primary dark:bg-primary dark:text-gray-400 dark:bg-opacity-20
 
     &__active-range-between
-      @apply bg-primary bg-opacity-10 dark:bg-opacity-40
+      @apply bg-primary bg-opacity-10 dark:bg-opacity-40 transition-all duration-200
       @apply text-primary dark:text-white dark:text-opacity-60 #{!important}
-      &#{$p} __disabled
+      &#{$p}__disabled
         @apply dark:bg-opacity-20 #{!important}
 
     &__active-range-between-hovered
@@ -79,13 +79,13 @@
         @apply border-none #{!important}
 
     &__selected-date
-      @apply bg-primary
+      @apply bg-primary transition-all duration-200
       @apply text-white #{!important}
 
     &__disabled
       @apply text-black text-opacity-30 dark:text-white dark:text-opacity-30 #{!important}
-      @apply cursor-default
-      &#{$p} __selected-date
+      @apply cursor-default #{!important}
+      &#{$p}__selected-date
         @apply text-gray-200 bg-opacity-30 dark:text-white dark:text-opacity-30 #{!important}
 
     &__weekend
