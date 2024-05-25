@@ -2,7 +2,7 @@
 module.exports = {
   mode: 'jit',
   darkMode: 'selector',
-  content: ["./projects/**/*.{html,js,sass}", "./dist/angular-modern-calendar-datepicker/**/*.{html,ts,js,sass}", "./projects/angular-modern-calendar-datepicker/src/lib/components/**/*.{js,json,ts,sass,html}"],
+  content: ["./src/**/*.{html,js,ts}"],
   theme: {
     extend: {
       fontFamily: {

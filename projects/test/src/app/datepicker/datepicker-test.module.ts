@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {DatepickerTestComponent} from './datepicker-test.component';
 import {FormsModule} from "@angular/forms";
 import {ColorPickerModule} from "ngx-color-picker";
-import {ApdDatepickerPopupModule, DatepickerModule} from "angular-persian-datepicker";
+import {ApdDatepickerPopupModule, DatepickerModule} from "angular-modern-calendar-datepicker";
 
 
 @NgModule({

@@ -1,0 +1,109 @@
+<div
+  [class.dark]="darkMode"
+  [dir]="dateService.config.rtl ? 'rtl' : 'ltr'"
+  [class.font-sans_en]="calendarType === CalendarType.GREGORIAN"
+  [class]="containerStyle"
+  class="datepicker">
+  <div class="datepicker__header">
+    <a
+      (click)="onPreviousMonthClick()"
+      class="datepicker__month-changer">
+      <div class="datepicker__previous-icon"></div>
+      {{dateService.options.translate.previousMonth}}
+    </a>
+    <div
+      [class.flex-row-reverse]="dateService.config.rtl"
+      class="flex justify-center text-primary gap-2">
+      <div
+        (click)="onYearToggle()"
+        class="datepicker__view-toggle">
+        {{dateService.currentYear}}
+      </div>
+
+      <div
+        (click)="onMonthToggle()"
+        class="datepicker__view-toggle">
+        {{dateService.currentMonthName}}
+      </div>
+    </div>
+    <div
+      (click)="onNextMonthClick()"
+      class="datepicker__month-changer">
+      {{dateService.options.translate.nextMonth}}
+      <div class="datepicker__next-icon"></div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="calendarSelectorMode === 'date'"
+    class="datepicker__weeks-container">
+    <div class="datepicker__weeks">
+      <div
+        [class.text-xs]="calendarType === CalendarType.HIJRI"
+        class="datepicker__weeks-item"
+        *ngFor="let day of dateService.weekdaysShort">{{day}}</div>
+    </div>
+
+    <div class="flex flex-col mt-4 gap-4">
+      <div
+        *ngFor="let week of dates"
+        class="grid grid-cols-7">
+        <div
+          (mouseover)="hoveredDay = day.date"
+          (mouseleave)="hoveredDay = null"
+          [class.datepicker-item__active-range-between]="selectedStartDate && selectedEndDate && day.date.isBetween(selectedStartDate, selectedEndDate)"
+          [class.datepicker-item__active-range-between-hovered]="!selectedEndDate && selectedStartDate && hoveredDay && day.date.isBetween(selectedStartDate, hoveredDay)"
+          class="datepicker-item"
+          *ngFor="let day of week">
+          <div
+            class="datepicker-item__inside"
+            [class.cursor-pointer]="calendarMode !== CalendarMode.NORMAL"
+            [class.datepicker-item__weekend]="!(selectedStartDate && selectedEndDate && (day.date.isSame(selectedStartDate) || day.date.isSame(selectedEndDate))) && dateService.config.weekends.includes(day.weekDay)"
+            [class.datepicker-item__selected-date]="day.date.isSame(selectedStartDate) || day.date.isSame(selectedEndDate) || day.date.isSame(selectedDate)"
+            [class.datepicker-item__hovered]="calendarMode !== CalendarMode.NORMAL && !(selectedStartDate && selectedEndDate && (day.date.isSame(selectedStartDate) || day.date.isSame(selectedEndDate))) && !(selectedStartDate && selectedEndDate && day.date.isBetween(selectedStartDate, selectedEndDate))"
+            [class.datepicker-item__today]="day.isToday && !(selectedStartDate && selectedEndDate && day.date.isBetween(selectedStartDate, selectedEndDate))"
+            [class.datepicker-item__disabled]="!day.isForCurrentMonth"
+            (click)="onNewDateSelect(day)">
+            {{day.day}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="px-4" *ngIf="calendarSelectorMode === 'month'">
+    <div class="datepicker-month-view__item">
+      <div class="datepicker-month-view__item-inside"
+           [class.!border-primary]="month === dateService.currentMonthName"
+           [class.!text-primary]="month === dateService.currentMonthName"
+           [class.dark:!text-gray-400]="month === dateService.currentMonthName"
+           [class.dark:!bg-primary]="month === dateService.currentMonthName"
+           [class.dark:!bg-opacity-20]="month === dateService.currentMonthName"
+           (click)="changeCurrentMonth(i)"
+           *ngFor="let month of dateService.months; let i = index;">
+        {{month}}
+      </div>
+    </div>
+  </div>
+
+  <div class="ps-4 pe-2" *ngIf="calendarSelectorMode === 'year'">
+    <div
+      class="datepicker-year-view">
+      <div class="datepicker-year-view__item" *uiScroll="let data of datasource">
+        <div class="datepicker-year-view__item-inside"
+             *ngFor="let year of range(data * 4, data * 4 + 3, 1)"
+             [class.!border-primary]="year == dateService.currentYear"
+             [class.!text-primary]="year == dateService.currentYear"
+             (click)="changeCurrentYear(year)">
+          {{year}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-3 px-4">
+    <a (click)="onGoToTodayClick()"
+       class="datepicker__goto-today">
+      {{dateService.options.translate.goToToday}}
+    </a>
+  </div>
+</div>

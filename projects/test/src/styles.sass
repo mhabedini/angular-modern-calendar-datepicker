@@ -5,70 +5,18 @@
 @tailwind components
 @tailwind utilities
 
-.datepicker-item
-  $p: &
-
-  &__hovered:not(#{$p}__selected-date, #{$p}__disabled)
-    @apply hover:bg-primary hover:text-primary hover:bg-opacity-10
-
-  &__today:not(#{$p}__active-range-between, #{$p}__selected-date)
-    @apply border border-primary text-primary dark:bg-primary dark:text-gray-400 dark:bg-opacity-20
-
-  &__active-range-between
-    @apply bg-primary bg-opacity-10 dark:bg-opacity-40
-    @apply text-primary dark:text-white dark:text-opacity-60 #{!important}
-
-  &__active-range-between-hovered
-    @apply border-y border-y-primary
-
-    #{$p}__today
-      @apply border-none #{!important}
-
-  &__selected-date
-    @apply bg-primary
-    @apply text-white #{!important}
-
-  &__disabled
-    @apply text-black text-opacity-30 dark:text-white dark:text-opacity-30 #{!important}
-    @apply cursor-default
-
-  &__weekend
-    @apply text-red-600
-
-
-\::-webkit-scrollbar
-  width: 0.5rem
-  height: 0.5rem
-
-/* Track
-
-\::-webkit-scrollbar-track
-  box-shadow: none
-  height: inherit
-
-/* Handle
-
-\::-webkit-scrollbar-thumb
-  background: #d3d8d3
-  border-radius: 1.5rem
-
-  &:hover
-    background: #c5cbd3
-
-
-.scrollbar::-webkit-scrollbar
-  width: 6px
-
 
 .switch
   position: relative
   display: inline-block
   width: 60px
   height: 34px
+
   input
     opacity: 0
     width: 0
     height: 0
+
 .slider
   position: absolute
   cursor: pointer
@@ -79,6 +27,7 @@
   background-color: #ccc
   -webkit-transition: .4s
   transition: .4s
+
   &:before
     position: absolute
     content: ""
@@ -89,18 +38,23 @@
     background-color: white
     -webkit-transition: .4s
     transition: .4s
+
   &.round
     border-radius: 34px
+
     &:before
       border-radius: 50%
+
 input
   &:checked
     & + .slider
       background-color: rgb(var(--color-primary)) !important
+
       &:before
         -webkit-transform: translateX(26px)
         -ms-transform: translateX(26px)
         transform: translateX(26px)
+
   &:focus
     & + .slider
       box-shadow: 0 0 1px rgb(var(--color-primary)) !important

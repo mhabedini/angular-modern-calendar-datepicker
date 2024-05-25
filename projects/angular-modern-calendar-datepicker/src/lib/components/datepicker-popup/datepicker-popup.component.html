@@ -1,0 +1,15 @@
+<apd-datepicker
+  [id]="id"
+  [style.top.px]="top"
+  [style.bottom.px]="bottom"
+  [style.left.px]="left"
+  [style.right.px]="right"
+  [calendarMode]="calendarMode"
+  [calendarType]="calendarType"
+  class="fixed z-50"
+  containerStyle="datepicker__popup"
+  [darkMode]="darkMode"
+  [primaryColor]="primaryColor"
+  (onDateSelect)="this.onDateSelect.emit($event)"
+  (onDateRangeSelect)="this.onDateRangeSelect.emit($event)">
+</apd-datepicker>
