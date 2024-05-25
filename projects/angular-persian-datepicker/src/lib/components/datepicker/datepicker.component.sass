@@ -1,0 +1,117 @@
+
+.datepicker
+  @apply flex flex-col min-w-[20rem] border rounded-xl py-4 bg-white dark:bg-gray-800
+
+  &__header
+    @apply flex flex-row justify-between items-center px-4
+
+  &__weeks
+    @apply flex grid-cols-7 flex-row gap-2 text-sm bg-primary dark:bg-white dark:text-primary dark:font-bold dark:bg-opacity-70 text-white rounded-lg
+
+    &-container
+      @apply flex flex-col mt-4 px-4
+
+    &-item
+      @apply flex w-full h-10 items-center justify-center
+
+  &__goto-today
+    @apply h-10 bg-primary bg-opacity-10 font-bold dark:bg-white dark:bg-opacity-70 rounded-lg text-primary text-sm flex items-center justify-center cursor-pointer
+
+
+  &__view-toggle
+    @apply flex items-center rounded-full bg-primary bg-opacity-10 px-4 dark:bg-white dark:bg-opacity-70 py-2 cursor-pointer font-bold text-sm leading-4
+
+  &__month-changer
+    @apply cursor-pointer pe-0.5 py-2 flex leading-4 flex-row items-center text-xs text-gray-500 dark:text-gray-200 gap-1
+
+  &__next-icon
+    @apply border-e border-t border-primary w-2 h-2 rtl:-rotate-45 ltr:rotate-45
+
+  &__previous-icon
+    @apply border-s border-b border-primary w-2 h-2 rtl:-rotate-45 ltr:rotate-45
+
+  &-year-view
+    @apply flex flex-col mt-4 gap-2 h-80 overflow-y-scroll
+
+    &__item
+      @apply grid grid-cols-4 gap-2 mb-2
+
+      &-inside
+        @apply w-full flex items-center justify-center hover:font-bold
+        @apply h-10 border rounded-lg cursor-pointer text-sm hover:border-none gap-2
+        @apply hover:bg-opacity-10 hover:bg-primary hover:text-primary dark:text-white
+        @apply dark:hover:bg-opacity-30 dark:hover:text-white dark:hover:text-opacity-60
+
+
+  &-month-view
+    &__item
+      @apply grid grid-cols-3 grid-rows-4 mt-4 gap-2
+
+      &-inside
+        @apply w-full flex items-center justify-center hover:font-bold
+        @apply h-16 border rounded-lg cursor-pointer text-sm hover:border-none
+        @apply hover:bg-opacity-10 hover:bg-primary hover:text-primary dark:text-white
+        @apply dark:hover:bg-opacity-30 dark:hover:text-white dark:hover:text-opacity-60
+
+  &-item
+    $p: &
+    @apply flex h-10 w-full font-medium text-black dark:text-white justify-center
+
+    &__inside
+      @apply flex flex-col items-center justify-center leading-4 mx-1 w-full rounded
+
+    &__hovered:not(#{$p}__selected-date, #{$p}__disabled)
+      @apply hover:bg-primary hover:text-primary hover:bg-opacity-10 dark:hover:bg-opacity-30 dark:hover:text-white dark:hover:text-opacity-60
+
+    &__today:not(#{$p}__active-range-between, #{$p}__selected-date)
+      @apply border border-primary text-primary dark:bg-primary dark:text-gray-400 dark:bg-opacity-20
+
+    &__active-range-between
+      @apply bg-primary bg-opacity-10 dark:bg-opacity-40
+      @apply text-primary dark:text-white dark:text-opacity-60 #{!important}
+      &#{$p} __disabled
+        @apply dark:bg-opacity-20 #{!important}
+
+    &__active-range-between-hovered
+      @apply border-y border-y-primary
+
+      #{$p}__today
+        @apply border-none #{!important}
+
+    &__selected-date
+      @apply bg-primary
+      @apply text-white #{!important}
+
+    &__disabled
+      @apply text-black text-opacity-30 dark:text-white dark:text-opacity-30 #{!important}
+      @apply cursor-default
+      &#{$p} __selected-date
+        @apply text-gray-200 bg-opacity-30 dark:text-white dark:text-opacity-30 #{!important}
+
+    &__weekend
+      @apply text-red-600
+
+
+\::-webkit-scrollbar
+  width: 0.5rem
+  height: 0.5rem
+
+/* Track
+
+\::-webkit-scrollbar-track
+  box-shadow: none
+  height: inherit
+
+/* Handle
+
+\::-webkit-scrollbar-thumb
+  background: #d3d8d3
+  border-radius: 1.5rem
+
+  &:hover
+    background: #c5cbd3
+
+
+.scrollbar::-webkit-scrollbar
+  width: 6px
+
