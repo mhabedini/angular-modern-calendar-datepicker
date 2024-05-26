@@ -8,6 +8,8 @@
   [calendarType]="calendarType"
   class="fixed z-50"
   containerStyle="datepicker__popup"
+  [date]="date"
+  [dateRange]="dateRange"
   [darkMode]="darkMode"
   [primaryColor]="primaryColor"
   (onDateSelect)="this.onDateSelect.emit($event)"

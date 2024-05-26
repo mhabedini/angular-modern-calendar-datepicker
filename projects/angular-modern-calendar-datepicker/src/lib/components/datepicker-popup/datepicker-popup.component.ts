@@ -21,6 +21,9 @@ export class DatepickerPopupComponent {
   @Input() calendarType: CalendarType = CalendarType.JALALI
   @Input() calendarMode: CalendarMode = CalendarMode.DATEPICKER
 
+  @Input() date!: Moment | undefined
+  @Input() dateRange!: DateRange
+
   @Output() onDateSelect: EventEmitter<Moment> = new EventEmitter<Moment>()
   @Output() onDateRangeSelect: EventEmitter<DateRange> = new EventEmitter<DateRange>()
 }
