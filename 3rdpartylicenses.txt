@@ -13,7 +13,7 @@ MIT
 @angular/router
 MIT
 
-angular-persian-datepicker
+angular-modern-calendar-datepicker
 
 jalali-moment
 MIT
