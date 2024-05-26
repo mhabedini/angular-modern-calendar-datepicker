@@ -1,5 +1,5 @@
 import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import moment, {Moment} from "moment";
+import moment, {Moment, MomentInput} from "moment";
 import {IDatasource} from "ngx-ui-scroll";
 import {CalendarDay} from "../../models/calendar-day";
 import {DatepickerService} from "../../service/datepicker-service";
@@ -21,6 +21,12 @@ export class DatepickerComponent implements OnInit, OnChanges {
   @Input() calendarType: CalendarType = CalendarType.JALALI
   @Input() calendarMode: CalendarMode = CalendarMode.DATEPICKER
   @Input() containerStyle!: string
+  @Input() min!: Moment
+  @Input() max: Moment = moment().add(1, 'month')
+
+  @Input() isPastDisabled: boolean = false
+  @Input() showMonthOutOfRangeDays: boolean = false
+
 
   @Output() onDateSelect: EventEmitter<Moment> = new EventEmitter<Moment>()
   @Output() onDateRangeSelect: EventEmitter<DateRange> = new EventEmitter<DateRange>()
@@ -28,8 +34,8 @@ export class DatepickerComponent implements OnInit, OnChanges {
   @Input() date!: Moment | undefined
   @Input() dateRange!: DateRange
 
+  yesterday = moment().subtract(1, 'day')
   selectedDate!: Moment | undefined
-
   selectedStartDate!: any
   selectedEndDate!: any
 
@@ -44,6 +50,9 @@ export class DatepickerComponent implements OnInit, OnChanges {
   protected readonly moment = moment;
 
   constructor(private readonly element: ElementRef) {
+    setTimeout(() => {
+      this.yesterday = moment().subtract(1, 'day')
+    }, 60000)
   }
 
   ngOnInit() {
@@ -146,6 +155,18 @@ export class DatepickerComponent implements OnInit, OnChanges {
   }
 
   onNewDateSelect(date: CalendarDay) {
+    if (this.isPastDisabled && date.date.isBefore(this.yesterday)) {
+      return;
+    }
+
+    if (this.min && date.date.isBefore(this.min)) {
+      return;
+    }
+
+    if (this.max && date.date.isAfter(this.max)) {
+      return;
+    }
+
     if (!date.isForCurrentMonth) {
       return;
     }
