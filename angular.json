@@ -133,6 +133,14 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "baseHref": "https://mhabedini.github.io/angular-modern-calendar-datepicker/",
+            "name": "Angular modern calendar datepicker",
+            "email": "m.h.a.abedini@gmail.com"
+          }
         }
       }
     }
