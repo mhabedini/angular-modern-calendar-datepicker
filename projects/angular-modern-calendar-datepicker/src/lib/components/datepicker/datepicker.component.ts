@@ -25,7 +25,10 @@ export class DatepickerComponent implements OnInit, OnChanges {
   @Output() onDateSelect: EventEmitter<Moment> = new EventEmitter<Moment>()
   @Output() onDateRangeSelect: EventEmitter<DateRange> = new EventEmitter<DateRange>()
 
-  selectedDate!: any
+  @Input() date!: Moment | undefined
+  @Input() dateRange!: DateRange
+
+  selectedDate!: Moment | undefined
 
   selectedStartDate!: any
   selectedEndDate!: any
@@ -41,23 +44,34 @@ export class DatepickerComponent implements OnInit, OnChanges {
   protected readonly moment = moment;
 
   constructor(private readonly element: ElementRef) {
-    this.loadCalendar(new Date())
   }
 
   ngOnInit() {
+    let date
+    if (this.dateRange) {
+      this.selectedStartDate = this.dateRange.startDate
+      this.selectedEndDate = this.dateRange.endDate
+      date = this.dateRange.startDate.toDate()
+    } else if (this.date) {
+      this.selectedDate = this.date
+      date = this.date.toDate()
+    } else {
+      date = new Date()
+    }
+    this.loadCalendar(date);
     this.onColorChanges(this.primaryColor)
   }
 
   onPreviousMonthClick() {
-    this.loadCalendar(this.dates[1][1].date.subtract(1, 'month'))
+    this.loadCalendar(moment(this.dates[1][1].date).subtract(1, 'month'))
   }
 
   onNextMonthClick() {
-    this.loadCalendar(this.dates[1][1].date.add(1, 'month'))
+    this.loadCalendar(moment(this.dates[1][1].date).add(1, 'month'))
   }
 
   loadCalendar(date: Moment | Date) {
-    this.dateService = new DatepickerService(date, DatepickerFactory.create(this.calendarType))
+    this.dateService = new DatepickerService(date, DatepickerFactory.create(this.calendarType));
     this.dates = this.dateService.calendar()
     this.scrollToYear()
   }
