@@ -108,20 +108,19 @@ export class AmdDatepickerDirective {
     });
 
     if (window.innerHeight < rect.bottom + 510) {
-      this.componentRef.setInput('bottom', window.innerHeight - rect.top + 4)
-      this.componentRef.setInput('top', 'unset')
+      this.componentRef.setInput('positionBottom', window.innerHeight - rect.top + 4)
+      this.componentRef.setInput('positionTop', 'unset')
     } else {
-      this.componentRef.setInput('top', rect.bottom + 4);
-      this.componentRef.setInput('bottom', 'unset');
+      this.componentRef.setInput('positionTop', rect.bottom + 4);
+      this.componentRef.setInput('positionBottom', 'unset');
     }
 
-
     if (document.dir === 'rtl') {
-      this.componentRef.setInput('right', rect.left);
-      this.componentRef.setInput('left', 'unset');
+      this.componentRef.setInput('positionRight', rect.left);
+      this.componentRef.setInput('positionLeft', 'unset');
     } else {
-      this.componentRef.setInput('left', rect.left);
-      this.componentRef.setInput('right', 'unset');
+      this.componentRef.setInput('positionLeft', rect.left);
+      this.componentRef.setInput('positionRight', 'unset');
     }
     this.host.before(this.componentRef.location.nativeElement);
 
@@ -163,7 +162,7 @@ export class AmdDatepickerDirective {
   }
 
   removeDatepicker() {
-    document.getElementById(this.id)?.remove();
+    this.componentRef?.destroy()
     this.componentRef = null
   }
 }
