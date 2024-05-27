@@ -1,4 +1,4 @@
-<apd-datepicker
+<amd-datepicker
   [id]="id"
   [style.top.px]="top"
   [style.bottom.px]="bottom"
@@ -16,6 +16,6 @@
   [dateRange]="dateRange"
   [darkMode]="darkMode"
   [primaryColor]="primaryColor"
-  (onDateSelect)="this.onDateSelect.emit($event)"
-  (onDateRangeSelect)="this.onDateRangeSelect.emit($event)">
-</apd-datepicker>
+  (onDateSelect)="onDateSelect.emit($event)"
+  (onDateRangeSelect)="onDateRangeSelect.emit($event)">
+</amd-datepicker>

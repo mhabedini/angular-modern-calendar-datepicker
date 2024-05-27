@@ -5,11 +5,11 @@ import {CalendarType} from "../../models/calendar-type";
 import {CalendarMode} from "../../models/calendar-mode";
 
 @Component({
-  selector: 'apd-datepicker-popup',
-  templateUrl: './datepicker-popup.component.html',
-  styleUrls: ['./datepicker-popup.component.sass']
+  selector: 'amd-datepicker-popup',
+  templateUrl: './amd-datepicker-popup.component.html',
+  styleUrls: ['./amd-datepicker-popup.component.sass']
 })
-export class DatepickerPopupComponent {
+export class AmdDatepickerPopupComponent {
   @Input() top!: number
   @Input() bottom!: number
   @Input() left!: number

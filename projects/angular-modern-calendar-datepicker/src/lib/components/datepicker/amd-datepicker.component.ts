@@ -11,11 +11,11 @@ import {CalendarMode} from "../../models/calendar-mode";
 
 
 @Component({
-  selector: 'apd-datepicker',
-  templateUrl: './datepicker.component.html',
-  styleUrls: ['./datepicker.component.sass', '../../../../styles.css',],
+  selector: 'amd-datepicker',
+  templateUrl: './amd-datepicker.component.html',
+  styleUrls: ['./amd-datepicker.component.sass', '../../../../styles.css',],
 })
-export class DatepickerComponent implements OnInit, OnChanges {
+export class AmdDatepickerComponent implements OnInit, OnChanges {
   @Input() darkMode: boolean = false
   @Input() primaryColor = '#38b0ac'
   @Input() calendarType: CalendarType = CalendarType.JALALI

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DatepickerPopupComponent } from './datepicker-popup.component';
+import { AmdDatepickerPopupComponent } from './amd-datepicker-popup.component';
 
 describe('DatepickerPopupComponent', () => {
-  let component: DatepickerPopupComponent;
-  let fixture: ComponentFixture<DatepickerPopupComponent>;
+  let component: AmdDatepickerPopupComponent;
+  let fixture: ComponentFixture<AmdDatepickerPopupComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DatepickerPopupComponent ]
+      declarations: [ AmdDatepickerPopupComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DatepickerPopupComponent);
+    fixture = TestBed.createComponent(AmdDatepickerPopupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

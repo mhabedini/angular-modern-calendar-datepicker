@@ -35,7 +35,7 @@
     <div class="mt-6 w-full">
       <label class="text-sm font-bold">انتخاب حداقل تاریخ</label>
       <input
-        adp-datepicker
+        amd-datepicker
         [calendarType]="calendarType"
         [calendarMode]="CalendarMode.DATEPICKER"
         [showMonthOutOfRangeDays]="showMonthOutOfRangeDays"
@@ -48,7 +48,7 @@
     <div class="mt-6 w-full">
       <label class="text-sm font-bold">انتخاب حداکثر تاریخ</label>
       <input
-        adp-datepicker
+        amd-datepicker
         [calendarType]="calendarType"
         [calendarMode]="CalendarMode.DATEPICKER"
         [showMonthOutOfRangeDays]="showMonthOutOfRangeDays"
@@ -111,7 +111,7 @@
       </select>
     </div>
   </div>
-  <apd-datepicker
+  <amd-datepicker
           class="mt-10 ms-8"
           containerStyle="border rounded-xl"
           [calendarType]="calendarType"
@@ -125,11 +125,11 @@
           (onDateSelect)="onDateSelect($event)"
           (onDateRangeSelect)="onDateRangeSelect($event)"
   >
-  </apd-datepicker>
+  </amd-datepicker>
   <div class="mt-2 w-full p-8">
     <label class="text-sm font-bold">تقویم popup</label>
     <input
-            adp-datepicker
+            amd-datepicker
             [calendarType]="calendarType"
             [min]="min"
             [max]="max"

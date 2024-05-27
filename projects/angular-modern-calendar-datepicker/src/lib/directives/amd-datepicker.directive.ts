@@ -8,16 +8,16 @@ import {
   Output,
   ViewContainerRef
 } from "@angular/core";
-import {DatepickerPopupComponent} from "../components/datepicker-popup/datepicker-popup.component";
+import {AmdDatepickerPopupComponent} from "../components/datepicker-popup/amd-datepicker-popup.component";
 import {randomStr} from "../helper/color-helper";
 import {DateRange} from "../models/date-range";
 import {Moment} from "moment";
 import {CalendarType} from "../models/calendar-type";
 import {CalendarMode} from "../models/calendar-mode";
 
-@Directive({selector: '[adp-datepicker]'})
-export class ApdDatepickerDirective {
-  componentRef!: ComponentRef<DatepickerPopupComponent> | null
+@Directive({selector: '[amd-datepicker]'})
+export class AmdDatepickerDirective {
+  componentRef!: ComponentRef<AmdDatepickerPopupComponent> | null
   host!: any
   id!: string
 
@@ -56,7 +56,7 @@ export class ApdDatepickerDirective {
 
     this.host = this.element.nativeElement
     this.id = randomStr('adp-datepicker-popup-')
-    this.componentRef = this.viewContainerRef.createComponent(DatepickerPopupComponent);
+    this.componentRef = this.viewContainerRef.createComponent(AmdDatepickerPopupComponent);
     const rect = this.host.getBoundingClientRect();
     this.componentRef.setInput('id', this.id)
 

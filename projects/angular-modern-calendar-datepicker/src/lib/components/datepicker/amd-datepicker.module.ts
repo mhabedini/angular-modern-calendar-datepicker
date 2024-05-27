@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DatepickerComponent } from './datepicker.component';
+import { AmdDatepickerComponent } from './amd-datepicker.component';
 import {UiScrollModule} from "ngx-ui-scroll";
 
 
 
 @NgModule({
   declarations: [
-    DatepickerComponent
+    AmdDatepickerComponent
   ],
   imports: [
     CommonModule,
     UiScrollModule
   ],
-  exports: [DatepickerComponent]
+  exports: [AmdDatepickerComponent]
 })
-export class DatepickerModule { }
+export class AmdDatepickerModule { }
