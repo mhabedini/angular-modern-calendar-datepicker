@@ -14,8 +14,14 @@ export class DatepickerTestComponent {
   darkMode: boolean = false
   public primaryColor = '#1546c0'
 
+  showMonthOutOfRangeDays: boolean = false
+  isPastDisabled: boolean = false
+
   calendarType: CalendarType = CalendarType.JALALI
   calendarMode: CalendarMode = CalendarMode.DATE_RANGE_PICKER
+
+  min!: Moment
+  max!: Moment
 
   format: any = 'YYYY/MM/DD';
 
@@ -49,4 +55,6 @@ export class DatepickerTestComponent {
     this.selectedStartDate = data.startDate
     this.selectedEndDate = data.endDate
   }
+
+  protected readonly CalendarMode = CalendarMode;
 }

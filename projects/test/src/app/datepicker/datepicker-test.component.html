@@ -32,10 +32,52 @@
              (keydown.enter)="onDateFormatChange(inputFormat.value)">
     </div>
 
+    <div class="mt-6 w-full">
+      <label class="text-sm font-bold">انتخاب حداقل تاریخ</label>
+      <input
+        adp-datepicker
+        [calendarType]="calendarType"
+        [calendarMode]="CalendarMode.DATEPICKER"
+        [showMonthOutOfRangeDays]="showMonthOutOfRangeDays"
+        [primaryColor]="primaryColor"
+        [darkMode]="darkMode"
+        (onDateSelect)="min = $event"
+        class="!border !outline-none px-2 border-primary rounded mt-2 !h-10 w-full" />
+    </div>
+
+    <div class="mt-6 w-full">
+      <label class="text-sm font-bold">انتخاب حداکثر تاریخ</label>
+      <input
+        adp-datepicker
+        [calendarType]="calendarType"
+        [calendarMode]="CalendarMode.DATEPICKER"
+        [showMonthOutOfRangeDays]="showMonthOutOfRangeDays"
+        [primaryColor]="primaryColor"
+        [darkMode]="darkMode"
+        (onDateSelect)="max = $event"
+        class="!border !outline-none px-2 border-primary rounded mt-2 !h-10 w-full" />
+    </div>
+
     <div class="mt-6 flex flex-col gap-2">
       حالت تاریک
       <label class="text-sm switch">
         <input [(ngModel)]="darkMode" type="checkbox">
+        <span class="slider round"></span>
+      </label>
+    </div>
+
+    <div class="mt-6 flex flex-col gap-2">
+      نمایش روزهای خارج از ماه
+      <label class="text-sm switch">
+        <input [(ngModel)]="showMonthOutOfRangeDays" type="checkbox">
+        <span class="slider round"></span>
+      </label>
+    </div>
+
+    <div class="mt-6 flex flex-col gap-2">
+      غیرفعالسازی انتخاب گذشته
+      <label class="text-sm switch">
+        <input [(ngModel)]="isPastDisabled" type="checkbox">
         <span class="slider round"></span>
       </label>
     </div>
@@ -74,7 +116,11 @@
           containerStyle="border rounded-xl"
           [calendarType]="calendarType"
           [darkMode]="darkMode"
+          [showMonthOutOfRangeDays]="showMonthOutOfRangeDays"
           [primaryColor]="primaryColor"
+          [isPastDisabled]="isPastDisabled"
+          [min]="min"
+          [max]="max"
           [calendarMode]="calendarMode"
           (onDateSelect)="onDateSelect($event)"
           (onDateRangeSelect)="onDateRangeSelect($event)"
@@ -85,7 +131,11 @@
     <input
             adp-datepicker
             [calendarType]="calendarType"
+            [min]="min"
+            [max]="max"
             [calendarMode]="calendarMode"
+            [showMonthOutOfRangeDays]="showMonthOutOfRangeDays"
+            [isPastDisabled]="isPastDisabled"
             [primaryColor]="primaryColor"
             [darkMode]="darkMode"
             (onDateSelect)="onDateSelect($event)"

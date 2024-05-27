@@ -1,5 +1,5 @@
 import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import moment, {Moment, MomentInput} from "moment";
+import moment, {Moment} from "moment";
 import {IDatasource} from "ngx-ui-scroll";
 import {CalendarDay} from "../../models/calendar-day";
 import {DatepickerService} from "../../service/datepicker-service";
@@ -22,7 +22,7 @@ export class DatepickerComponent implements OnInit, OnChanges {
   @Input() calendarMode: CalendarMode = CalendarMode.DATEPICKER
   @Input() containerStyle!: string
   @Input() min!: Moment
-  @Input() max: Moment = moment().add(1, 'month')
+  @Input() max!: Moment
 
   @Input() isPastDisabled: boolean = false
   @Input() showMonthOutOfRangeDays: boolean = false
