@@ -17,6 +17,11 @@ export class DatepickerPopupComponent {
   @Input() id!: number
   @Input() darkMode: boolean = false
   @Input() primaryColor = '#38b0ac'
+  @Input() min!: Moment
+  @Input() max!: Moment
+
+  @Input() isPastDisabled: boolean = false
+  @Input() showMonthOutOfRangeDays: boolean = false
 
   @Input() calendarType: CalendarType = CalendarType.JALALI
   @Input() calendarMode: CalendarMode = CalendarMode.DATEPICKER

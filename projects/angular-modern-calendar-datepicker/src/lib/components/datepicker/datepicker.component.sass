@@ -1,4 +1,3 @@
-
 .datepicker
   @apply flex flex-col min-w-[20rem] py-4 bg-white dark:bg-gray-800
 
@@ -63,10 +62,10 @@
     &__inside
       @apply flex flex-col items-center justify-center leading-4 mx-1 w-full rounded
 
-    &__hovered:not(#{$p}__selected-date, #{$p}__disabled)
+    &__hovered:not(#{$p}__selected-date):not(#{$p}__disabled):not(#{$p}__unselectable)
       @apply hover:bg-primary hover:text-primary hover:bg-opacity-10 dark:hover:bg-opacity-30 dark:hover:text-white dark:hover:text-opacity-60
 
-    &__today:not(#{$p}__active-range-between, #{$p}__selected-date)
+    &__today:not(#{$p}__active-range-between):not(#{$p}__selected-date)
       @apply border border-primary text-primary dark:bg-primary dark:text-gray-400 dark:bg-opacity-20
 
     &__active-range-between
@@ -86,10 +85,26 @@
       @apply text-white #{!important}
 
     &__disabled
-      @apply text-black text-opacity-30 dark:text-white dark:text-opacity-30 #{!important}
-      @apply cursor-default #{!important}
+      @apply text-black dark:text-white
+      @apply cursor-default dark:text-opacity-30 text-opacity-30 #{!important}
       &#{$p}__selected-date
         @apply text-gray-200 bg-opacity-30 dark:text-white dark:text-opacity-30 #{!important}
+
+    &__unselectable
+      @apply text-opacity-60 text-black dark:text-white dark:text-opacity-60
+      @apply cursor-default #{!important}
+
+      &:after
+        content: ""
+        height: 1px
+        width: 55%
+        position: absolute
+        left: .8rem
+        top: .7rem
+        transform: rotate(45deg)
+        transform-origin: 1px 1px
+
+        @apply bg-gray-600 dark:bg-gray-300
 
     &__weekend
       @apply text-red-600 dark:text-red-400

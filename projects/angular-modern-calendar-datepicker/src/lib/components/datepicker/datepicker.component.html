@@ -48,25 +48,28 @@
       <div
         *ngFor="let week of dates"
         class="grid grid-cols-7">
-        <div
-          (mouseover)="hoveredDay = day.date"
-          (mouseleave)="hoveredDay = null"
-          [class.datepicker-item__active-range-between]="selectedStartDate && selectedEndDate && day.date.isBetween(selectedStartDate, selectedEndDate)"
-          [class.datepicker-item__active-range-between-hovered]="!selectedEndDate && selectedStartDate && hoveredDay && day.date.isBetween(selectedStartDate, hoveredDay)"
-          class="datepicker-item"
-          *ngFor="let day of week">
+        <ng-container *ngFor="let day of week">
           <div
-            class="datepicker-item__inside"
-            [class.cursor-pointer]="calendarMode !== CalendarMode.NORMAL"
-            [class.datepicker-item__weekend]="!(selectedStartDate && selectedEndDate && (day.date.isSame(selectedStartDate) || day.date.isSame(selectedEndDate))) && dateService.config.weekends.includes(day.weekDay)"
-            [class.datepicker-item__selected-date]="day.date.isSame(selectedStartDate) || day.date.isSame(selectedEndDate) || day.date.isSame(selectedDate)"
-            [class.datepicker-item__hovered]="calendarMode !== CalendarMode.NORMAL && !(selectedStartDate && selectedEndDate && (day.date.isSame(selectedStartDate) || day.date.isSame(selectedEndDate))) && !(selectedStartDate && selectedEndDate && day.date.isBetween(selectedStartDate, selectedEndDate))"
-            [class.datepicker-item__today]="day.isToday && !(selectedStartDate && selectedEndDate && day.date.isBetween(selectedStartDate, selectedEndDate))"
-            [class.datepicker-item__disabled]="!day.isForCurrentMonth"
-            (click)="onNewDateSelect(day)">
-            {{day.day}}
+            (mouseover)="hoveredDay = day.date"
+            (mouseleave)="hoveredDay = null"
+            [class.datepicker-item__active-range-between]="((showMonthOutOfRangeDays && !day.isForCurrentMonth) || day.isForCurrentMonth) && selectedStartDate && selectedEndDate && day.date.isBetween(selectedStartDate, selectedEndDate)"
+            [class.datepicker-item__active-range-between-hovered]="((showMonthOutOfRangeDays && !day.isForCurrentMonth) || day.isForCurrentMonth) && (!max || !hoveredDay?.isAfter(max)) && !selectedEndDate && selectedStartDate && hoveredDay && day.date.isBetween(selectedStartDate, hoveredDay)"
+            class="datepicker-item relative">
+            <div
+              *ngIf="(showMonthOutOfRangeDays && !day.isForCurrentMonth) || day.isForCurrentMonth"
+              class="datepicker-item__inside"
+              [class.cursor-pointer]="calendarMode !== CalendarMode.NORMAL"
+              [class.datepicker-item__hovered]="calendarMode !== CalendarMode.NORMAL && !(selectedStartDate && selectedEndDate && (day.date.isSame(selectedStartDate) || day.date.isSame(selectedEndDate))) && !(selectedStartDate && selectedEndDate && day.date.isBetween(selectedStartDate, selectedEndDate))"
+              [class.datepicker-item__selected-date]="day.date.isSame(selectedStartDate) || day.date.isSame(selectedEndDate) || day.date.isSame(selectedDate)"
+              [class.datepicker-item__unselectable]="isPastDisabled && day.date.isBefore(yesterday) || (min && day?.date?.isBefore(min)) || (max && day?.date?.isAfter(max))"
+              [class.datepicker-item__today]="day.isToday && !(selectedStartDate && selectedEndDate && day.date.isBetween(selectedStartDate, selectedEndDate))"
+              [class.datepicker-item__disabled]="!day.isForCurrentMonth"
+              [class.datepicker-item__weekend]="!(selectedStartDate && selectedEndDate && (day.date.isSame(selectedStartDate) || day.date.isSame(selectedEndDate))) && dateService.config.weekends.includes(day.weekDay)"
+              (click)="onNewDateSelect(day)">
+              {{day.day}}
+            </div>
           </div>
-        </div>
+        </ng-container>
       </div>
     </div>
   </div>

@@ -25,6 +25,11 @@ export class ApdDatepickerDirective {
   @Input() calendarMode: CalendarMode = CalendarMode.DATEPICKER
   @Input() darkMode: boolean = false
   @Input() primaryColor = '#38b0ac'
+  @Input() min!: Moment
+  @Input() max!: Moment
+
+  @Input() isPastDisabled: boolean = false
+  @Input() showMonthOutOfRangeDays: boolean = false
 
   @Output() onDateRangeSelect = new EventEmitter<DateRange>
   @Output() onDateSelect = new EventEmitter<Moment>
@@ -72,6 +77,18 @@ export class ApdDatepickerDirective {
     }
     if (this.selectedRange) {
       this.componentRef.setInput('dateRange', this.selectedRange)
+    }
+    if (this.min) {
+      this.componentRef.setInput('min', this.min)
+    }
+    if (this.max) {
+      this.componentRef.setInput('max', this.max)
+    }
+    if (this.isPastDisabled) {
+      this.componentRef.setInput('isPastDisabled', this.isPastDisabled)
+    }
+    if (this.showMonthOutOfRangeDays) {
+      this.componentRef.setInput('showMonthOutOfRangeDays', this.showMonthOutOfRangeDays)
     }
 
     this.componentRef.instance.onDateSelect.subscribe(val => {
