@@ -111,6 +111,22 @@
       </select>
     </div>
   </div>
+  <div class="mt-2 w-full p-8">
+    <label class="text-sm font-bold">تقویم popup</label>
+    <input
+      amd-datepicker
+      [calendarType]="calendarType"
+      [min]="min"
+      [max]="max"
+      [calendarMode]="calendarMode"
+      [showMonthOutOfRangeDays]="showMonthOutOfRangeDays"
+      [isPastDisabled]="isPastDisabled"
+      [primaryColor]="primaryColor"
+      [darkMode]="darkMode"
+      (onDateSelect)="onDateSelect($event)"
+      (onDateRangeSelect)="onDateRangeSelect($event)"
+      class="!border !outline-none px-2 border-primary rounded mt-2 !h-10 w-full" />
+  </div>
   <amd-datepicker
           class="mt-10 ms-8"
           containerStyle="border rounded-xl"
@@ -126,20 +142,5 @@
           (onDateRangeSelect)="onDateRangeSelect($event)"
   >
   </amd-datepicker>
-  <div class="mt-2 w-full p-8">
-    <label class="text-sm font-bold">تقویم popup</label>
-    <input
-            amd-datepicker
-            [calendarType]="calendarType"
-            [min]="min"
-            [max]="max"
-            [calendarMode]="calendarMode"
-            [showMonthOutOfRangeDays]="showMonthOutOfRangeDays"
-            [isPastDisabled]="isPastDisabled"
-            [primaryColor]="primaryColor"
-            [darkMode]="darkMode"
-            (onDateSelect)="onDateSelect($event)"
-            (onDateRangeSelect)="onDateRangeSelect($event)"
-            class="!border !outline-none px-2 border-primary rounded mt-2 !h-10 w-full" />
-  </div>
+
 </div>
