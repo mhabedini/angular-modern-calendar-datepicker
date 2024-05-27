@@ -8,8 +8,6 @@ import {Datepicker} from "../datepicker/datepicker";
 
 export class DatepickerService {
   private readonly _datepicker: Datepicker;
-  private readonly _currentMonth!: number
-  private readonly _currentYear!: number
   private readonly _currentMonthName!: string
   private readonly _months!: string[]
   private readonly _monthsShort!: string[]
@@ -23,12 +21,8 @@ export class DatepickerService {
   constructor(date: Date | Moment, datepicker: Datepicker) {
     this._datepicker = datepicker;
     if (date instanceof Date) {
-      this._currentMonth = date.getMonth()
-      this._currentYear = date.getFullYear()
       this._date = moment(date)
     } else if (date instanceof moment) {
-      this._currentMonth = date.month()
-      this._currentYear = date.year()
       this._date = date
     }
 
