@@ -108,15 +108,15 @@ export class AmdDatepickerDirective {
     });
 
     if (window.innerHeight < rect.bottom + 510) {
-      this.componentRef.setInput('positionBottom', window.innerHeight - rect.top + 4)
+      this.componentRef.setInput('positionBottom', window.innerHeight - rect.top + 8)
       this.componentRef.setInput('positionTop', 'unset')
     } else {
-      this.componentRef.setInput('positionTop', rect.bottom + 4);
+      this.componentRef.setInput('positionTop', rect.bottom + 8);
       this.componentRef.setInput('positionBottom', 'unset');
     }
 
     if (document.dir === 'rtl') {
-      this.componentRef.setInput('positionRight', rect.left);
+      this.componentRef.setInput('positionRight', document.body.clientWidth - rect.right);
       this.componentRef.setInput('positionLeft', 'unset');
     } else {
       this.componentRef.setInput('positionLeft', rect.left);
