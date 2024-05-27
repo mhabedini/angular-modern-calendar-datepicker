@@ -2,7 +2,6 @@
  * Public API Surface of angular-modern-calendar-datepicker
  */
 
-import {hexToRgb} from "./lib/helper/color-helper";
 
 export * from './lib/components/datepicker/amd-datepicker.component';
 export * from './lib/components/datepicker/amd-datepicker.module';
@@ -23,4 +22,3 @@ export * from './lib/models/date-range'
 export * from './lib/models/datepicker-options'
 export * from './lib/models/datepicker-config'
 export * from './lib/service/datepicker-service'
-export {hexToRgb} from './lib/helper/color-helper'

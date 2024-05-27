@@ -1,6 +1,6 @@
-import {Component, ElementRef} from '@angular/core';
+import {Component} from '@angular/core';
 import moment, {Moment} from "moment";
-import {DateRange, hexToRgb} from "angular-modern-calendar-datepicker";
+import {DateRange} from "angular-modern-calendar-datepicker";
 import {CalendarType} from "../../../../angular-modern-calendar-datepicker/src/lib/models/calendar-type";
 import {CalendarMode} from "../../../../angular-modern-calendar-datepicker/src/lib/models/calendar-mode";
 
@@ -29,12 +29,8 @@ export class DatepickerTestComponent {
   selectedStartDate!: Moment
   selectedEndDate!: Moment
 
-  constructor(private readonly element: ElementRef) {
+  constructor() {
     this.onColorChanges(this.primaryColor)
-  }
-
-  onDateChange(value: string) {
-    this.selectedDate = moment(value).format(this.format)
   }
 
   onDateFormatChange(value: string) {
@@ -44,7 +40,6 @@ export class DatepickerTestComponent {
 
   onColorChanges(color: string) {
     this.primaryColor = color
-    this.element.nativeElement.style.setProperty('--color-primary', hexToRgb(color));
   }
 
   onDateSelect(date: Moment) {
