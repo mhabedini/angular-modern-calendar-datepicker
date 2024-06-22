@@ -56,7 +56,10 @@ export class AmdDatepickerComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    let date
+    if (this.date) {
+      this.date.startOf('day').set({hour: 12})
+    }
+    let date;
     if (this.dateRange) {
       this.selectedStartDate = this.dateRange.startDate
       this.selectedEndDate = this.dateRange.endDate
