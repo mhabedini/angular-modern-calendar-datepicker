@@ -48,7 +48,7 @@ export class AmdDatepickerDirective implements OnInit {
 
     ngOnInit() {
         this.control?.control?.valueChanges.subscribe(value => {
-            this.selectedDate = moment(value)
+          this.selectedDate = value ? moment(value) : undefined;
         })
 
         if (this.date && this.element.nativeElement instanceof HTMLInputElement) {

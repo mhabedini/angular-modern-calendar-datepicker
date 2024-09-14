@@ -60,7 +60,7 @@
               class="datepicker-item__inside"
               [class.cursor-pointer]="calendarMode !== CalendarMode.NORMAL"
               [class.datepicker-item__hovered]="calendarMode !== CalendarMode.NORMAL && !(selectedStartDate && selectedEndDate && (day.date.isSame(selectedStartDate) || day.date.isSame(selectedEndDate))) && !(selectedStartDate && selectedEndDate && day.date.isBetween(selectedStartDate, selectedEndDate))"
-              [class.datepicker-item__selected-date]="day.date.isSame(selectedStartDate) || day.date.isSame(selectedEndDate) || day.date.isSame(selectedDate, 'day')"
+              [class.datepicker-item__selected-date]="day.date.isSame(selectedStartDate || null) || day.date.isSame(selectedEndDate || null) || day.date.isSame(selectedDate || null, 'day')"
               [class.datepicker-item__unselectable]="isPastDisabled && day.date.isBefore(yesterday) || (min && day?.date?.isBefore(min)) || (max && day?.date?.isAfter(max))"
               [class.datepicker-item__today]="day.isToday && !(selectedStartDate && selectedEndDate && day.date.isBetween(selectedStartDate, selectedEndDate))"
               [class.datepicker-item__disabled]="!day.isForCurrentMonth"
