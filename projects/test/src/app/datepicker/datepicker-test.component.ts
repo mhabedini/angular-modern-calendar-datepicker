@@ -28,7 +28,7 @@ export class DatepickerTestComponent {
 
 
   form = new FormGroup({
-    name: new FormControl(moment().format('YYYY/MM/DD'))
+    date: new FormControl(moment().format('YYYY/MM/DD'))
   })
 
   selectedDate: any
