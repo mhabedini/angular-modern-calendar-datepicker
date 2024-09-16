@@ -1,16 +1,19 @@
-<amd-datepicker
-  [id]="id"
-  [calendarMode]="calendarMode"
-  [calendarType]="calendarType"
-  containerStyle="datepicker__popup"
-  [min]="min"
-  [max]="max"
-  [showMonthOutOfRangeDays]="showMonthOutOfRangeDays"
-  [isPastDisabled]="isPastDisabled"
-  [date]="date"
-  [dateRange]="dateRange"
-  [darkMode]="darkMode"
-  [primaryColor]="primaryColor"
-  (onDateSelect)="onDateSelect.emit($event)"
-  (onDateRangeSelect)="onDateRangeSelect.emit($event)">
-</amd-datepicker>
+<div class="fixed datepicker__container">
+  <amd-datepicker
+    [id]="id"
+    [calendarMode]="calendarMode"
+    [calendarType]="calendarType"
+    containerStyle="datepicker__popup"
+    class="relative"
+    [min]="min"
+    [max]="max"
+    [showMonthOutOfRangeDays]="showMonthOutOfRangeDays"
+    [isPastDisabled]="isPastDisabled"
+    [date]="date"
+    [dateRange]="dateRange"
+    [darkMode]="darkMode"
+    [primaryColor]="primaryColor"
+    (onDateSelect)="onDateSelect.emit($event)"
+    (onDateRangeSelect)="onDateRangeSelect.emit($event)">
+  </amd-datepicker>
+</div>

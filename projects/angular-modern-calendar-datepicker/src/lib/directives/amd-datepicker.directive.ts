@@ -95,7 +95,6 @@ export class AmdDatepickerDirective implements OnInit {
         this.host = this.element.nativeElement
         this.id = randomStr('adp-datepicker-popup-')
         this.componentRef = this.viewContainerRef.createComponent(AmdDatepickerPopupComponent);
-        const rect = this.host.getBoundingClientRect();
         this.componentRef.setInput('id', this.id)
 
         if (this.calendarType) {
@@ -150,24 +149,6 @@ export class AmdDatepickerDirective implements OnInit {
             this.element.nativeElement.value = val.startDate.format('YYYY/MM/DD') + ' - ' + val.endDate.format('YYYY/MM/DD');
             this.removeDatepicker()
         });
-
-        if (window.innerHeight < rect.bottom + 468) {
-            this.componentRef.setInput('positionBottom', window.innerHeight - rect.top + 8)
-            this.componentRef.setInput('positionTop', 'unset')
-        } else {
-            this.componentRef.setInput('positionTop', rect.bottom + 8);
-            this.componentRef.setInput('positionBottom', 'unset');
-        }
-
-        if (document.dir === 'rtl') {
-            this.componentRef.setInput('positionRight', document.body.clientWidth - rect.right);
-            this.componentRef.setInput('positionLeft', 'unset');
-        } else {
-            this.componentRef.setInput('positionLeft', rect.left);
-            this.componentRef.setInput('positionRight', 'unset');
-        }
-        this.host.before(this.componentRef.location.nativeElement);
-
 
         setTimeout(() => {
             const element = document.getElementById(this.id)
