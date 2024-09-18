@@ -205,6 +205,10 @@ export class AmdDatepickerComponent implements OnInit, OnChanges {
     this.selectedStartDate = undefined
     this.selectedDate = undefined
   }
+  childStyle = {}
+  changeStyle(newStyle: { top?: string; bottom?: string, right?: string, left?: string }) {
+    this.childStyle = { ...this.childStyle, ...newStyle };
+  }
 
   protected readonly CalendarType = CalendarType;
   protected readonly CalendarMode = CalendarMode;
