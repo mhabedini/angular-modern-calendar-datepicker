@@ -1,6 +1,6 @@
 {
   "name": "angular-modern-calendar-datepicker",
-  "version": "0.9.15",
+  "version": "17.0.0",
   "author": "Mohammad Hosein Abedini",
   "homepage": "",
   "repository": {
@@ -9,8 +9,8 @@
   },
   "private": false,
   "peerDependencies": {
-    "@angular/common": "^15.0.0",
-    "@angular/core": "^15.0.0",
+    "@angular/common": "^17.0.0",
+    "@angular/core": "^17.0.0",
     "@types/moment-hijri": "^2.1.4",
     "@types/moment-jalaali": "^0.7.9",
     "jalali-moment": "^3.3.11",
