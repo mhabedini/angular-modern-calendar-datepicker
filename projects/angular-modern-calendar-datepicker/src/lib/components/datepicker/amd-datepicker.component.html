@@ -1,5 +1,6 @@
 <div
   [class.dark]="darkMode"
+  [ngStyle]="childStyle"
   [dir]="dateService.config.rtl ? 'rtl' : 'ltr'"
   [class.font-sans_en]="calendarType === CalendarType.GREGORIAN"
   [class]="containerStyle"
@@ -104,8 +105,10 @@
   </div>
 
   <div class="mt-3 px-4">
-    <a (click)="onGoToTodayClick()"
-       class="datepicker__goto-today">
+    <a
+      (click)="onGoToTodayClick()"
+      *ngIf="false"
+      class="datepicker__goto-today">
       {{dateService.options.translate.goToToday}}
     </a>
   </div>
