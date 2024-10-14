@@ -18,7 +18,6 @@ import moment, {Moment} from "moment";
 import {CalendarType} from "../models/calendar-type";
 import {CalendarMode} from "../models/calendar-mode";
 import {NgControl} from "@angular/forms";
-import {ignoreElements} from "rxjs";
 
 @Directive({selector: '[amd-datepicker]'})
 export class AmdDatepickerDirective implements OnInit {
@@ -44,7 +43,11 @@ export class AmdDatepickerDirective implements OnInit {
   @Input() date!: Moment | string | undefined
   @Input() selectedRange!: DateRange | undefined
 
-  constructor(private element: ElementRef, private viewContainerRef: ViewContainerRef, @Optional() @Self() private control: NgControl) {
+  constructor(
+    private element: ElementRef,
+    private viewContainerRef: ViewContainerRef,
+    @Optional() @Self() private control: NgControl,
+  ) {
 
   }
 
@@ -102,6 +105,8 @@ export class AmdDatepickerDirective implements OnInit {
 
     this.id = randomStr('amd-datepicker-popup-')
     this.datepickerRef = this.viewContainerRef.createComponent(AmdDatepickerPopupComponent);
+    document.body.appendChild(this.datepickerRef.location.nativeElement);
+
     this.datepickerRef.setInput('id', this.id)
 
     if (this.calendarType) {
@@ -175,8 +180,8 @@ export class AmdDatepickerDirective implements OnInit {
     const windowWidth = window.innerWidth;
     const isAboveMidpoint = rect.y < windowHeight / 2;
 
-    const positionTop = isAboveMidpoint ? `${rect.bottom}px` : 'unset';
-    const positionBottom = isAboveMidpoint ? 'unset' : `${windowHeight - rect.top}px`;
+    const positionTop = isAboveMidpoint ? `${rect.bottom + 4}px` : 'unset';
+    const positionBottom = isAboveMidpoint ? 'unset' : `${windowHeight - rect.top + 4}px`;
 
     this.datepickerRef?.setInput('positionTop', positionTop);
     this.datepickerRef?.setInput('positionBottom', positionBottom);
