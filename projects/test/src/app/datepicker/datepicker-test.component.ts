@@ -1,4 +1,8 @@
 import {Component} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ColorPickerModule} from 'ngx-color-picker';
+import {AmdDatepickerComponent, AmdDatepickerDirective} from "angular-modern-calendar-datepicker";
 import moment, {Moment} from "moment";
 import {DateRange} from "angular-modern-calendar-datepicker";
 import {CalendarType} from "../../../../angular-modern-calendar-datepicker/src/lib/models/calendar-type";
@@ -9,7 +13,9 @@ import {FormControl, FormGroup} from "@angular/forms";
 @Component({
   selector: 'app-datepicker',
   templateUrl: './datepicker-test.component.html',
-  styleUrls: ['./datepicker-test.component.sass']
+  styleUrls: ['./datepicker-test.component.sass'],
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ColorPickerModule, AmdDatepickerComponent, AmdDatepickerDirective]
 })
 export class DatepickerTestComponent {
   darkMode: boolean = false

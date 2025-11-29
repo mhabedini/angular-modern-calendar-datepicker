@@ -3,16 +3,15 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {DatepickerTestModule} from "./datepicker/datepicker-test.module";
+import {DatepickerTestComponent} from "./datepicker/datepicker-test.component";
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    DatepickerTestModule,
+    AppComponent,
+    DatepickerTestComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],
