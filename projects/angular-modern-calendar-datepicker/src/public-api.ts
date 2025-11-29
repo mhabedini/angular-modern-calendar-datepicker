@@ -4,11 +4,9 @@
 
 
 export * from './lib/components/datepicker/amd-datepicker.component';
-export * from './lib/components/datepicker/amd-datepicker.module';
 export * from './lib/components/datepicker-popup/amd-datepicker-popup.component';
-export * from './lib/components/datepicker-popup/amd-datepicker-popup.module';
 export * from './lib/directives/amd-datepicker.directive';
-export * from './lib/directives/amd-datepicker-directive.module';
+export * from './lib/angular-modern-calendar-datepicker.module';
 export * from './lib/datepicker/datepicker'
 export * from './lib/datepicker/datepicker-factory'
 export * from './lib/datepicker/gregorian-datepicker'

@@ -8,7 +8,7 @@ describe('DatepickerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AmdDatepickerComponent ]
+      imports: [ AmdDatepickerComponent ]
     })
     .compileComponents();
 

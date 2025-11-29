@@ -1,4 +1,6 @@
 import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {UiScrollModule} from "ngx-ui-scroll";
 import moment, {Moment} from "moment";
 import {IDatasource} from "ngx-ui-scroll";
 import {CalendarDay} from "../../models/calendar-day";
@@ -14,7 +16,8 @@ import {CalendarMode} from "../../models/calendar-mode";
   selector: 'amd-datepicker',
   templateUrl: './amd-datepicker.component.html',
   styleUrls: ['./amd-datepicker.component.sass', '../../../../styles.css',],
-  standalone: false
+  standalone: true,
+  imports: [CommonModule, UiScrollModule]
 })
 export class AmdDatepickerComponent implements OnInit, OnChanges {
   @Input() darkMode: boolean = false

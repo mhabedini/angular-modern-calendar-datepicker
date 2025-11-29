@@ -1,4 +1,5 @@
 import {AfterViewInit, Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {Moment} from "moment";
 import {DateRange} from "../../models/date-range";
 import {CalendarType} from "../../models/calendar-type";
@@ -9,7 +10,8 @@ import {AmdDatepickerComponent} from "../datepicker/amd-datepicker.component";
   selector: 'amd-datepicker-popup',
   templateUrl: './amd-datepicker-popup.component.html',
   styleUrls: ['./amd-datepicker-popup.component.sass'],
-  standalone: false
+  standalone: true,
+  imports: [CommonModule, AmdDatepickerComponent]
 })
 export class AmdDatepickerPopupComponent implements AfterViewInit {
 

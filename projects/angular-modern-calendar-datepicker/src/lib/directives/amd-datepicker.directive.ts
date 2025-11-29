@@ -17,9 +17,12 @@ import {DateRange} from "../models/date-range";
 import moment, {Moment} from "moment";
 import {CalendarType} from "../models/calendar-type";
 import {CalendarMode} from "../models/calendar-mode";
-import {NgControl} from "@angular/forms";
+import {FormsModule, NgControl, ReactiveFormsModule} from "@angular/forms";
 
-@Directive({selector: '[amd-datepicker]', standalone: false})
+@Directive({
+  selector: '[amd-datepicker]',
+  standalone: true
+})
 export class AmdDatepickerDirective implements OnInit {
   datepickerRef!: ComponentRef<AmdDatepickerPopupComponent> | null
   id!: string
