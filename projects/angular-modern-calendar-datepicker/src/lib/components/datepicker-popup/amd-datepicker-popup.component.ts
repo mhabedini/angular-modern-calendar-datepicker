@@ -8,7 +8,8 @@ import {AmdDatepickerComponent} from "../datepicker/amd-datepicker.component";
 @Component({
   selector: 'amd-datepicker-popup',
   templateUrl: './amd-datepicker-popup.component.html',
-  styleUrls: ['./amd-datepicker-popup.component.sass']
+  styleUrls: ['./amd-datepicker-popup.component.sass'],
+  standalone: false
 })
 export class AmdDatepickerPopupComponent implements AfterViewInit {
 

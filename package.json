@@ -1,6 +1,6 @@
 {
   "name": "angular-modern-calendar-datepicker",
-  "version": "18.0.0",
+  "version": "19.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -10,14 +10,14 @@
   },
   "private": false,
   "dependencies": {
-    "@angular/animations": "^18.0.0",
-    "@angular/common": "^18.0.0",
-    "@angular/compiler": "^18.0.0",
-    "@angular/core": "^18.0.0",
-    "@angular/forms": "^18.0.0",
-    "@angular/platform-browser": "^18.0.0",
-    "@angular/platform-browser-dynamic": "^18.0.0",
-    "@angular/router": "^18.0.0",
+    "@angular/animations": "^19.0.0",
+    "@angular/common": "^19.0.0",
+    "@angular/compiler": "^19.0.0",
+    "@angular/core": "^19.0.0",
+    "@angular/forms": "^19.0.0",
+    "@angular/platform-browser": "^19.0.0",
+    "@angular/platform-browser-dynamic": "^19.0.0",
+    "@angular/router": "^19.0.0",
     "@types/moment-hijri": "^2.1.4",
     "@types/moment-jalaali": "^0.7.9",
     "jalali-moment": "^3.3.11",
@@ -25,16 +25,16 @@
     "moment-hijri": "^2.1.2",
     "moment-jalaali": "^0.10.0",
     "moment-range": "^4.0.2",
-    "ngx-color-picker": "^16.0.0",
+    "ngx-color-picker": "^17.0.0",
     "ngx-ui-scroll": "^3.2.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.6.0",
-    "zone.js": "~0.14.0"
+    "zone.js": "~0.15.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^18.0.0",
-    "@angular/cli": "^18.0.0",
-    "@angular/compiler-cli": "^18.0.0",
+    "@angular-devkit/build-angular": "^19.0.0",
+    "@angular/cli": "^19.0.0",
+    "@angular/compiler-cli": "^19.0.0",
     "@types/jasmine": "~4.3.0",
     "angular-cli-ghpages": "^1.0.6",
     "jasmine-core": "~4.5.0",
@@ -43,8 +43,8 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
-    "ng-packagr": "^18.0.0",
+    "ng-packagr": "^19.0.0",
     "tailwindcss": "^3.4.3",
-    "typescript": "~5.4.0"
+    "typescript": "~5.6.0"
   }
 }

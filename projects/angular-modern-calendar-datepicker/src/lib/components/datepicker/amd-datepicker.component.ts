@@ -14,6 +14,7 @@ import {CalendarMode} from "../../models/calendar-mode";
   selector: 'amd-datepicker',
   templateUrl: './amd-datepicker.component.html',
   styleUrls: ['./amd-datepicker.component.sass', '../../../../styles.css',],
+  standalone: false
 })
 export class AmdDatepickerComponent implements OnInit, OnChanges {
   @Input() darkMode: boolean = false
